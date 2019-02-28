@@ -1,7 +1,17 @@
 #include "configurator.hpp"
+#include "ui_configurator.h"
 
-cs::Configurator::Configurator(QWidget* parent):
-    QWidget(parent)
+#include <core/common.hpp>
+
+cs::Configurator::Configurator(QWidget *parent) :
+    QWidget(parent),
+    ui(new Ui::Configurator)
 {
+    ui->setupUi(this);
+    setWindowTitle(cs::Literals::configuratorTitle);
+}
 
+cs::Configurator::~Configurator()
+{
+    delete ui;
 }

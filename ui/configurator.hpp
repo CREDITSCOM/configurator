@@ -3,6 +3,10 @@
 
 #include <QWidget>
 
+namespace Ui {
+class Configurator;
+}
+
 namespace cs
 {
     class Configurator : public QWidget
@@ -10,7 +14,11 @@ namespace cs
         Q_OBJECT
 
     public:
-        explicit Configurator(QWidget* parent = nullptr);
+        explicit Configurator(QWidget *parent = nullptr);
+        ~Configurator();
+
+    private:
+        Ui::Configurator* ui;
     };
 }
 
