@@ -3,9 +3,9 @@
 
 #include <core/common.hpp>
 
-cs::Configurator::Configurator(QWidget *parent) :
+cs::Configurator::Configurator(QWidget *parent):
     QWidget(parent),
-    ui(new Ui::Configurator)
+    ui(new Ui::Configurator())
 {
     ui->setupUi(this);
     ui->listBox->setVisible(false);
