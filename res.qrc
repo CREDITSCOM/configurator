@@ -1,2 +1,6 @@
-<!DOCTYPE RCC>
-<RCC version="1.0"/>
+<RCC>
+    <qresource prefix="/">
+        <file>resources/credits_bg.jpg</file>
+        <file>resources/cs.ico</file>
+    </qresource>
+</RCC>
