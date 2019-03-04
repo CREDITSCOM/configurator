@@ -9,9 +9,11 @@ cs::Configurator::Configurator(QWidget *parent):
 {
     ui->setupUi(this);
     ui->listBox->setVisible(false);
+    ui->boostrapTypeBox->addItems(cs::Literals::boostrapTypes);
     ui->mainLayout->addStretch(1);
 
     setWindowTitle(cs::Literals::configuratorTitle);
+    setWindowIcon(QIcon(":/resources/cs.ico"));
 }
 
 cs::Configurator::~Configurator()

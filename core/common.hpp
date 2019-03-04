@@ -1,7 +1,7 @@
-#ifndef COMMON_H
-#define COMMON_H
+#ifndef COMMON_HPP
+#define COMMON_HPP
 
-#include <QString>
+#include <QStringList>
 
 namespace cs
 {
@@ -9,7 +9,14 @@ namespace cs
     {
         inline const static QString configuratorTitle = QString("CS Node Configurator");
         inline const static QString boostrap = QString("Boostrap");
+        inline const static QString routerType = QString("rounter");
+        inline const static QString signalServerType = QString("signal_server");
+
+        inline const static QStringList boostrapTypes = {
+            routerType,
+            signalServerType
+        };
     };
 }
 
-#endif // COMMON_H
+#endif // COMMON_HPP
