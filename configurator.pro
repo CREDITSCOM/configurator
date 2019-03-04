@@ -13,12 +13,10 @@ DEFINES += QT_DEPRECATED_WARNINGS
 HEADERS += \
     ui/configurator.hpp \
     core/common.hpp \
-    ui/configurator.hpp
 
 SOURCES += \
     main.cpp \
     ui/configurator.cpp \
-    ui/configurator.cpp
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

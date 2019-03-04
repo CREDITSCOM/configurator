@@ -2,5 +2,6 @@
     <qresource prefix="/">
         <file>resources/credits_bg.jpg</file>
         <file>resources/cs.ico</file>
+        <file>resources/style.css</file>
     </qresource>
 </RCC>
