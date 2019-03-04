@@ -1,9 +1,9 @@
 QT += core gui widgets
 
 if (MSVC) {
-  QMAKE_CXXFLAGS += -std=c++17 /std:c++17
+    QMAKE_CXXFLAGS += -std=c++17 /std:c++17
 } else {
-  CONFIG += c++17
+    CONFIG += c++17
 }
 
 CONFIG += app_bundle
