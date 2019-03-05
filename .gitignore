@@ -73,3 +73,5 @@ Thumbs.db
 
 /debug
 /release
+/src/release
+/src/debug
