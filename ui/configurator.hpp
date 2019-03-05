@@ -3,8 +3,9 @@
 
 #include <QWidget>
 
-namespace Ui {
-class Configurator;
+namespace Ui
+{
+    class Configurator;
 }
 
 namespace cs
@@ -14,7 +15,7 @@ namespace cs
         Q_OBJECT
 
     public:
-        explicit Configurator(QWidget *parent = nullptr);
+        explicit Configurator(QWidget* parent = nullptr);
         ~Configurator();
 
     private:

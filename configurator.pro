@@ -13,10 +13,12 @@ DEFINES += QT_DEPRECATED_WARNINGS
 HEADERS += \
     ui/configurator.hpp \
     core/common.hpp \
+    core/serializer.hpp
 
 SOURCES += \
     main.cpp \
     ui/configurator.cpp \
+    core/serializer.cpp
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
