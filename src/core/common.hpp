@@ -10,6 +10,7 @@ namespace cs
         inline const static QString configuratorTitle = QString("CS Node Configurator");
         inline const static QString boostrap = QString("Boostrap");
         inline const static QString routerType = QString("router");
+        inline const static QString listType = QString("list");
         inline const static QString signalServerType = QString("signal_server");
         inline const static QString configFileName = QString("config.ini");
 
@@ -32,8 +33,12 @@ namespace cs
 
         // ui lists
         inline const static QStringList boostrapTypes = {
-            routerType,
-            signalServerType
+            signalServerType,
+            listType
+        };
+
+        inline const static QStringList nodeTypes = {
+            routerType
         };
     };
 
@@ -45,14 +50,14 @@ namespace cs
     {
         QString nodeType;
         QString boostrapType;
-        bool isIpv6;
+        bool isIpv6 = false;
 
         QString signalServerIp;
-        int signalServerPort;
+        int signalServerPort = 0;
 
         QString nodeIp;
-        int nodeOutputPort;
-        int nodeInputPort;
+        int nodeOutputPort = 0;
+        int nodeInputPort = 0;
     };
 }
 

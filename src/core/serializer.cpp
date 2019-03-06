@@ -16,12 +16,12 @@ cs::Serializer::Serializer(const QString& fileName, QObject* parent):
     }
 }
 
-cs::Data cs::Serializer::readData()
+cs::Data cs::Serializer::readData() const
 {
     cs::Data data;
 
-    if (settings->contains(cs::Literals::paramsKey))
-    {
+//    if (settings->contains(cs::Literals::paramsKey))
+//    {
         settings->beginGroup(cs::Literals::paramsKey);
 
         if (settings->contains(cs::Literals::nodeTypeParameter)) {
@@ -37,10 +37,10 @@ cs::Data cs::Serializer::readData()
         }
 
         settings->endGroup();
-    }
+//    }
 
-    if (settings->contains(cs::Literals::signalServerKey))
-    {
+//    if (settings->contains(cs::Literals::signalServerKey))
+//    {
         settings->beginGroup(cs::Literals::signalServerKey);
 
         if (settings->contains(cs::Literals::ipParameter)) {
@@ -52,10 +52,10 @@ cs::Data cs::Serializer::readData()
         }
 
         settings->endGroup();
-    }
+//    }
 
-    if (settings->contains(cs::Literals::hostInputKey))
-    {
+//    if (settings->contains(cs::Literals::hostInputKey))
+//    {
         settings->beginGroup(cs::Literals::hostInputKey);
 
         if (settings->contains(cs::Literals::portParameter)) {
@@ -63,10 +63,10 @@ cs::Data cs::Serializer::readData()
         }
 
         settings->endGroup();
-    }
+//    }
 
-    if (settings->contains(cs::Literals::hostOutputKey))
-    {
+//    if (settings->contains(cs::Literals::hostOutputKey))
+//    {
         settings->beginGroup(cs::Literals::hostOutputKey);
 
         if (settings->contains(cs::Literals::ipParameter)) {
@@ -76,9 +76,8 @@ cs::Data cs::Serializer::readData()
         if (settings->contains(cs::Literals::portParameter)) {
             data.nodeOutputPort = settings->value(cs::Literals::portParameter).value<int>();
         }
-    }
+//    }
 
-    emit readCompleted(data);
     return data;
 }
 

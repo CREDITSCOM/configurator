@@ -2,6 +2,7 @@
 #define CONFIGURATOR_HPP
 
 #include <QWidget>
+#include <core/common.hpp>
 
 namespace Ui
 {
@@ -20,6 +21,12 @@ namespace cs
 
     private:
         Ui::Configurator* ui;
+
+        void updateUi(const Data& data);
+        Data uiData() const;
+
+    private slots:
+        void onApplyButtonClicked();
     };
 }
 

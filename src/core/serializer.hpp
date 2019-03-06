@@ -18,7 +18,7 @@ namespace cs
         explicit Serializer(const QString& fileName = "", QObject* parent = nullptr);
         ~Serializer();
 
-        Data readData();
+        Data readData() const;
         void writeData(const Data& data);
 
     private:
