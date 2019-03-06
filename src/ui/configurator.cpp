@@ -16,7 +16,7 @@ cs::Configurator::Configurator(QWidget* parent):
     setWindowTitle(cs::Literals::configuratorTitle);
     setWindowIcon(QIcon(":/resources/cs.ico"));
 
-    setStyleSheet(":/resources/style.css");
+    setStyleSheet(":/resources/style");
 
     cs::Serializer serializer(cs::Literals::configFileName);
     updateUi(serializer.readData());

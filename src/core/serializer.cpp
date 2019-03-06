@@ -20,63 +20,52 @@ cs::Data cs::Serializer::readData() const
 {
     cs::Data data;
 
-//    if (settings->contains(cs::Literals::paramsKey))
-//    {
-        settings->beginGroup(cs::Literals::paramsKey);
+    settings->beginGroup(cs::Literals::paramsKey);
 
-        if (settings->contains(cs::Literals::nodeTypeParameter)) {
-            data.nodeType = settings->value(cs::Literals::nodeTypeParameter).value<QString>();
-        }
+    if (settings->contains(cs::Literals::nodeTypeParameter)) {
+        data.nodeType = settings->value(cs::Literals::nodeTypeParameter).value<QString>();
+    }
 
-        if (settings->contains(cs::Literals::boostrapTypeParameter)) {
-            data.boostrapType = settings->value(cs::Literals::boostrapTypeParameter).value<QString>();
-        }
+    if (settings->contains(cs::Literals::boostrapTypeParameter)) {
+        data.boostrapType = settings->value(cs::Literals::boostrapTypeParameter).value<QString>();
+    }
 
-        if (settings->contains(cs::Literals::ipv6TypeParameter)) {
-            data.isIpv6 = settings->value(cs::Literals::ipv6TypeParameter).value<bool>();
-        }
+    if (settings->contains(cs::Literals::ipv6TypeParameter)) {
+        data.isIpv6 = settings->value(cs::Literals::ipv6TypeParameter).value<bool>();
+    }
 
-        settings->endGroup();
-//    }
+    settings->endGroup();
 
-//    if (settings->contains(cs::Literals::signalServerKey))
-//    {
-        settings->beginGroup(cs::Literals::signalServerKey);
+    settings->beginGroup(cs::Literals::signalServerKey);
 
-        if (settings->contains(cs::Literals::ipParameter)) {
-            data.signalServerIp = settings->value(cs::Literals::ipParameter).value<QString>();
-        }
+    if (settings->contains(cs::Literals::ipParameter)) {
+        data.signalServerIp = settings->value(cs::Literals::ipParameter).value<QString>();
+    }
 
-        if (settings->contains(cs::Literals::portParameter)) {
-            data.signalServerPort = settings->value(cs::Literals::portParameter).value<int>();
-        }
+    if (settings->contains(cs::Literals::portParameter)) {
+        data.signalServerPort = settings->value(cs::Literals::portParameter).value<int>();
+    }
 
-        settings->endGroup();
-//    }
+    settings->endGroup();
 
-//    if (settings->contains(cs::Literals::hostInputKey))
-//    {
-        settings->beginGroup(cs::Literals::hostInputKey);
+    settings->beginGroup(cs::Literals::hostInputKey);
 
-        if (settings->contains(cs::Literals::portParameter)) {
-            data.nodeInputPort = settings->value(cs::Literals::portParameter).value<int>();
-        }
+    if (settings->contains(cs::Literals::portParameter)) {
+        data.nodeInputPort = settings->value(cs::Literals::portParameter).value<int>();
+    }
 
-        settings->endGroup();
-//    }
+    settings->endGroup();
 
-//    if (settings->contains(cs::Literals::hostOutputKey))
-//    {
-        settings->beginGroup(cs::Literals::hostOutputKey);
+    settings->beginGroup(cs::Literals::hostOutputKey);
 
-        if (settings->contains(cs::Literals::ipParameter)) {
-            data.nodeIp = settings->value(cs::Literals::ipParameter).value<QString>();
-        }
+    if (settings->contains(cs::Literals::ipParameter)) {
+        data.nodeIp = settings->value(cs::Literals::ipParameter).value<QString>();
+    }
 
-        if (settings->contains(cs::Literals::portParameter)) {
-            data.nodeOutputPort = settings->value(cs::Literals::portParameter).value<int>();
-        }
-//    }
+    if (settings->contains(cs::Literals::portParameter)) {
+        data.nodeOutputPort = settings->value(cs::Literals::portParameter).value<int>();
+    }
+
 
     return data;
 }
