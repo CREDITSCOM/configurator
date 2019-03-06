@@ -4,6 +4,8 @@
 #include <QObject>
 #include <memory>
 
+#include <core/common.hpp>
+
 class QSettings;
 
 namespace cs
@@ -14,11 +16,20 @@ namespace cs
 
     public:
         explicit Serializer(const QString& fileName = "", QObject* parent = nullptr);
+        ~Serializer();
+
+        Data readData();
+        void writeData(const Data& data);
 
     private:
-        struct Data;
-        std::unique_ptr<Data> data;
         std::unique_ptr<QSettings> settings;
+
+        void writeDefaultData();
+        void convert();
+
+    signals:
+        void readCompleted(const Data&);
+        void writeCompleted();
     };
 }
 

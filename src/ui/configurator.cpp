@@ -2,6 +2,7 @@
 #include "ui_configurator.h"
 
 #include <core/common.hpp>
+#include <core/serializer.hpp>
 
 cs::Configurator::Configurator(QWidget* parent):
     QWidget(parent),
@@ -15,6 +16,8 @@ cs::Configurator::Configurator(QWidget* parent):
     setWindowIcon(QIcon(":/resources/cs.ico"));
 
     setStyleSheet(":/resources/style.css");
+
+    cs::Serializer serializer(cs::Literals::configFileName);
 }
 
 cs::Configurator::~Configurator()
