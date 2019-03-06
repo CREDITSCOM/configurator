@@ -2,6 +2,7 @@
 #include "ui_configurator.h"
 
 #include <core/serializer.hpp>
+#include <QFile>
 
 cs::Configurator::Configurator(QWidget* parent):
     QWidget(parent),
@@ -16,7 +17,11 @@ cs::Configurator::Configurator(QWidget* parent):
     setWindowTitle(cs::Literals::configuratorTitle);
     setWindowIcon(QIcon(":/resources/cs.ico"));
 
-    setStyleSheet(":/resources/style");
+    QFile file(":/resources/style");
+
+    if (file.open(QIODevice::ReadOnly)) {
+        setStyleSheet(file.readAll());
+    }
 
     cs::Serializer serializer(cs::Literals::configFileName);
     updateUi(serializer.readData());
