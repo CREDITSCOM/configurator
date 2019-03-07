@@ -22,11 +22,14 @@ namespace cs
     private:
         Ui::Configurator* ui;
 
+        void setupUi();
+
         void updateUi(const Data& data);
         Data uiData() const;
 
     private slots:
         void onApplyButtonClicked();
+        void onBoostrapButtonClicked(const QString& text);
     };
 }
 

@@ -6,14 +6,20 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>363</width>
-    <height>290</height>
+    <width>396</width>
+    <height>532</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>363</width>
+    <width>396</width>
     <height>290</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>396</width>
+    <height>532</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -24,8 +30,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>358</width>
-     <height>554</height>
+     <width>391</width>
+     <height>531</height>
     </rect>
    </property>
    <layout class="QVBoxLayout" name="mainLayout">
@@ -69,7 +75,7 @@
           <widget class="QComboBox" name="boostrapTypeBox">
            <property name="minimumSize">
             <size>
-             <width>72</width>
+             <width>90</width>
              <height>22</height>
             </size>
            </property>
@@ -150,7 +156,7 @@
            </property>
            <property name="minimumSize">
             <size>
-             <width>72</width>
+             <width>90</width>
              <height>22</height>
             </size>
            </property>
@@ -238,8 +244,8 @@
      <widget class="QGroupBox" name="listBox">
       <property name="minimumSize">
        <size>
-        <width>335</width>
-        <height>129</height>
+        <width>348</width>
+        <height>240</height>
        </size>
       </property>
       <property name="title">
@@ -253,6 +259,12 @@
          </item>
          <item row="0" column="0">
           <widget class="QPushButton" name="listBrowseButton">
+           <property name="minimumSize">
+            <size>
+             <width>80</width>
+             <height>21</height>
+            </size>
+           </property>
            <property name="text">
             <string>Browse</string>
            </property>

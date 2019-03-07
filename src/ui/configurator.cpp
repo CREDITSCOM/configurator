@@ -8,6 +8,19 @@ cs::Configurator::Configurator(QWidget* parent):
     QWidget(parent),
     ui(new Ui::Configurator())
 {
+    setupUi();
+
+    QObject::connect(ui->applyButton, &QPushButton::clicked, this, &Configurator::onApplyButtonClicked);
+    QObject::connect(ui->boostrapTypeBox, &QComboBox::currentTextChanged, this, &Configurator::onBoostrapButtonClicked);
+}
+
+cs::Configurator::~Configurator()
+{
+    delete ui;
+}
+
+void cs::Configurator::setupUi()
+{
     setObjectName("configurator");
 
     ui->setupUi(this);
@@ -28,12 +41,7 @@ cs::Configurator::Configurator(QWidget* parent):
     cs::Serializer serializer(cs::Literals::configFileName);
     updateUi(serializer.readData());
 
-    QObject::connect(ui->applyButton, &QPushButton::clicked, this, &Configurator::onApplyButtonClicked);
-}
-
-cs::Configurator::~Configurator()
-{
-    delete ui;
+    resize(minimumSize());
 }
 
 void cs::Configurator::updateUi(const cs::Data& data)
@@ -79,4 +87,18 @@ void cs::Configurator::onApplyButtonClicked()
 {
     cs::Serializer seriazler(cs::Literals::configFileName);
     seriazler.writeData(uiData());
+}
+
+void cs::Configurator::onBoostrapButtonClicked(const QString& text)
+{
+    if (text == cs::Literals::signalServerType)
+    {
+        ui->listBox->setVisible(false);
+        resize(minimumSize());
+    }
+    else
+    {
+        ui->listBox->setVisible(true);
+        resize(maximumSize());
+    }
 }
