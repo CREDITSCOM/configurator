@@ -48,8 +48,8 @@
       </property>
       <property name="minimumSize">
        <size>
-        <width>0</width>
-        <height>0</height>
+        <width>348</width>
+        <height>65</height>
        </size>
       </property>
       <property name="title">
@@ -69,14 +69,20 @@
           <widget class="QComboBox" name="boostrapTypeBox">
            <property name="minimumSize">
             <size>
-             <width>0</width>
-             <height>0</height>
+             <width>72</width>
+             <height>22</height>
             </size>
            </property>
           </widget>
          </item>
          <item>
           <widget class="QPushButton" name="applyButton">
+           <property name="minimumSize">
+            <size>
+             <width>80</width>
+             <height>21</height>
+            </size>
+           </property>
            <property name="text">
             <string>Apply</string>
            </property>
@@ -84,6 +90,12 @@
          </item>
          <item>
           <widget class="QPushButton" name="runButton">
+           <property name="minimumSize">
+            <size>
+             <width>80</width>
+             <height>21</height>
+            </size>
+           </property>
            <property name="text">
             <string>Run</string>
            </property>
@@ -109,6 +121,12 @@
     </item>
     <item>
      <widget class="QGroupBox" name="nodeTypeBox">
+      <property name="minimumSize">
+       <size>
+        <width>348</width>
+        <height>65</height>
+       </size>
+      </property>
       <property name="title">
        <string>Node</string>
       </property>
@@ -129,6 +147,12 @@
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>72</width>
+             <height>22</height>
+            </size>
            </property>
            <property name="layoutDirection">
             <enum>Qt::LeftToRight</enum>

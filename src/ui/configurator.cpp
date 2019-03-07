@@ -8,6 +8,8 @@ cs::Configurator::Configurator(QWidget* parent):
     QWidget(parent),
     ui(new Ui::Configurator())
 {
+    setObjectName("configurator");
+
     ui->setupUi(this);
     ui->listBox->setVisible(false);
 
@@ -17,7 +19,7 @@ cs::Configurator::Configurator(QWidget* parent):
     setWindowTitle(cs::Literals::configuratorTitle);
     setWindowIcon(QIcon(":/resources/cs.ico"));
 
-    QFile file(":/resources/style");
+    QFile file(":/resources/style.css");
 
     if (file.open(QIODevice::ReadOnly)) {
         setStyleSheet(file.readAll());
