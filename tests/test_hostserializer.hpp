@@ -14,6 +14,7 @@ namespace cstests
 
     private slots:
         void deserialize();
+        void serialize();
     };
 }
 
