@@ -9,9 +9,9 @@ namespace cs
     class Converter : public QObject
     {
         Q_OBJECT
+        Q_DISABLE_COPY(Converter)
 
         Converter() = delete;
-        Converter(QObject* parent = nullptr) = delete;
 
     public:
         static bool convert(const QString& fileName);
