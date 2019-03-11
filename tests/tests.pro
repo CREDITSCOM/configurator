@@ -7,6 +7,18 @@ if (MSVC) {
 }
 
 HEADERS += \
+    test_hostserializer.hpp \
+    ../src/core/common.hpp \
+    ../src/core/converter.hpp \
+    ../src/core/hostserializer.hpp \
+    ../src/core/serializer.hpp \
 
 SOURCES += \
-    tests.cpp
+    tests.cpp \
+    test_hostserializer.cpp \
+    ../src/core/converter.cpp \
+    ../src/core/hostserializer.cpp \
+    ../src/core/serializer.cpp \
+
+INCLUDEPATH += \
+    ../src
