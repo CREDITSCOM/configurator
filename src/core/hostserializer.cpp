@@ -62,6 +62,25 @@ cs::Hosts cs::HostSerializer::deserialize(const QString& fileName)
     return hosts;
 }
 
+void cs::HostSerializer::serialize(const cs::Hosts& hosts, const QString& fileName)
+{
+    if (QFile::exists(fileName)) {
+        QFile::remove(fileName);
+        return;
+    }
+
+    QFile file(fileName);
+    file.open(QIODevice::WriteOnly | QIODevice::Text);
+
+    QTextStream stream(&file);
+
+    for (const auto& host : hosts) {
+        stream << host.ip << ':' << host.port << endl;
+    }
+
+    file.close();
+}
+
 bool cs::operator==(const cs::Host& lhs, const cs::Host& rhs)
 {
     return (lhs.ip == rhs.ip) && (lhs.port == rhs.port);

@@ -23,6 +23,7 @@ namespace cs
 
         // try to get host list from file
         Hosts deserialize(const QString& fileName);
+        void serialize(const Hosts& hosts, const QString& fileName);
     };
 
     bool operator==(const Host& lhs, const Host& rhs);
