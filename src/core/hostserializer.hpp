@@ -19,15 +19,21 @@ namespace cs
         Q_OBJECT
 
     public:
-        explicit HostSerializer(QObject* parent = nullptr);
+        explicit HostSerializer(const QString& fileName, QObject* parent = nullptr);
 
         // try to get host list from file
-        Hosts deserialize(const QString& fileName);
-        void serialize(const Hosts& hosts, const QString& fileName);
+        Hosts deserialize();
+        void serialize(const Hosts& hosts);
+
+    private:
+        QString name;
     };
 
     bool operator==(const Host& lhs, const Host& rhs);
     bool operator!=(const Host& lhs, const Host& rhs);
+
+    HostSerializer& operator<<(HostSerializer& serializer, const Hosts& hosts);
+    HostSerializer& operator>>(HostSerializer& serializer, Hosts& hosts);
 }
 
 #endif // HOSTSERIALIZER_HPP

@@ -40,8 +40,9 @@ void cstests::Test_HostSerializer::deserialize()
         file.close();
     }
 
-    cs::HostSerializer serializer;
-    cs::Hosts deserializedList = serializer.deserialize(fileName);
+    cs::HostSerializer serializer(fileName);
+    cs::Hosts deserializedList;
+    serializer >> deserializedList;
 
     QFile::remove(fileName);
     QCOMPARE(expectedList, deserializedList);
@@ -57,10 +58,11 @@ void cstests::Test_HostSerializer::serialize()
 
     const QString fileName = "test.txt";
 
-    cs::HostSerializer serializer;
-    serializer.serialize(expectedList, fileName);
+    cs::HostSerializer serializer(fileName);
+    serializer << expectedList;
 
-    auto list = serializer.deserialize(fileName);
+    cs::Hosts list;
+    serializer >> list;
 
     if (QFile::exists(fileName)) {
         QFile::remove(fileName);

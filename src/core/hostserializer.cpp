@@ -4,8 +4,9 @@
 #include <QRegularExpressionMatch>
 #include <QRegularExpressionMatchIterator>
 
-cs::HostSerializer::HostSerializer(QObject* parent):
-    QObject(parent)
+cs::HostSerializer::HostSerializer(const QString& fileName, QObject* parent):
+    QObject(parent),
+    name(fileName)
 {
 }
 
@@ -26,14 +27,14 @@ static QStringList searchExpression(const QRegularExpression& expression, const 
     return result;
 }
 
-cs::Hosts cs::HostSerializer::deserialize(const QString& fileName)
+cs::Hosts cs::HostSerializer::deserialize()
 {
-    QFile file(fileName);
+    QFile file(name);
     cs::Hosts hosts;
 
     if (!file.open(QIODevice::ReadOnly))
     {
-        qDebug() << "Deserialization of hosts failed, can not access file " << fileName;
+        qDebug() << "Deserialization of hosts failed, can not access file " << name;
         return hosts;
     }
 
@@ -62,14 +63,14 @@ cs::Hosts cs::HostSerializer::deserialize(const QString& fileName)
     return hosts;
 }
 
-void cs::HostSerializer::serialize(const cs::Hosts& hosts, const QString& fileName)
+void cs::HostSerializer::serialize(const cs::Hosts& hosts)
 {
-    if (QFile::exists(fileName)) {
-        QFile::remove(fileName);
+    if (QFile::exists(name)) {
+        QFile::remove(name);
         return;
     }
 
-    QFile file(fileName);
+    QFile file(name);
     file.open(QIODevice::WriteOnly | QIODevice::Text);
 
     QTextStream stream(&file);
@@ -89,4 +90,16 @@ bool cs::operator==(const cs::Host& lhs, const cs::Host& rhs)
 bool cs::operator!=(const cs::Host& lhs, const cs::Host& rhs)
 {
     return !(lhs == rhs);
+}
+
+cs::HostSerializer& cs::operator<<(cs::HostSerializer& serializer, const cs::Hosts& hosts)
+{
+    serializer.serialize(hosts);
+    return serializer;
+}
+
+cs::HostSerializer& cs::operator>>(cs::HostSerializer& serializer, cs::Hosts& hosts)
+{
+    hosts = serializer.deserialize();
+    return serializer;
 }
