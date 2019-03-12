@@ -4,6 +4,7 @@
 #include <QLabel>
 #include <QImage>
 #include <QTimer>
+#include <QIcon>
 #include <QDesktopWidget>
 #include <QApplication>
 
@@ -21,7 +22,7 @@ cs::Ave::Ave(QWidget* parent):
     layout->addWidget(label);
 
     setLayout(layout);
-    setWindowFlag(Qt::FramelessWindowHint);
+    setWindowFlags(Qt::FramelessWindowHint | Qt::SplashScreen);
 
     label->setAutoFillBackground(true);
     label->setPixmap(QPixmap::fromImage(QImage(":/resources/credits_bg.jpg")));
@@ -47,7 +48,10 @@ void cs::Ave::doOnce()
 {
     QTimer::singleShot(timeOut, Qt::TimerType::PreciseTimer, [this] {
         if (ptr)
+        {
             ptr->show();
+            ptr->setFocus();
+        }
 
         delete this;
     });
