@@ -5,6 +5,7 @@
 
 #include <QFile>
 #include <QFileDialog>
+#include <QIntValidator>
 #include <QRegularExpression>
 #include <QRegularExpressionMatch>
 #include <QRegularExpressionMatchIterator>
@@ -14,6 +15,7 @@ cs::Configurator::Configurator(QWidget* parent):
     ui(new Ui::Configurator())
 {
     setupUi();
+    setupValidators();
 
     QObject::connect(ui->applyButton, &QPushButton::clicked, this, &Configurator::onApplyButtonClicked);
     QObject::connect(ui->boostrapTypeBox, &QComboBox::currentTextChanged, this, &Configurator::onBoostrapButtonClicked);
@@ -41,9 +43,8 @@ void cs::Configurator::setupUi()
 
     QFile file(":/resources/style.css");
 
-    if (file.open(QIODevice::ReadOnly)) {
+    if (file.open(QIODevice::ReadOnly))
         setStyleSheet(file.readAll());
-    }
 
     cs::Serializer serializer(cs::Literals::configFileName);
     updateUi(serializer.readData());
@@ -52,29 +53,32 @@ void cs::Configurator::setupUi()
     onBoostrapButtonClicked(ui->boostrapTypeBox->currentText());
 }
 
+void cs::Configurator::setupValidators()
+{
+    ui->outputPortEdit->setValidator(createPortValidator());
+    ui->inputPortEdit->setValidator(createPortValidator());
+
+    ui->outputIpEdit->setValidator(createIpValidator());
+}
+
 void cs::Configurator::updateUi(const cs::Data& data)
 {
-    if (!data.nodeType.isEmpty()) {
+    if (!data.nodeType.isEmpty())
         ui->nodeTypeComboBox->setCurrentText(data.nodeType);
-    }
 
-    if (!data.boostrapType.isEmpty()) {
+    if (!data.boostrapType.isEmpty())
         ui->boostrapTypeBox->setCurrentText(data.boostrapType);
-    }
 
     ui->ipv6CheckBox->setChecked(data.isIpv6);
 
-    if (!data.nodeIp.isEmpty()) {
+    if (!data.nodeIp.isEmpty())
         ui->outputIpEdit->setText(data.nodeIp);
-    }
 
-    if (data.nodeOutputPort) {
+    if (data.nodeOutputPort)
         ui->outputPortEdit->setText(QString::number(data.nodeOutputPort));
-    }
 
-    if (data.nodeInputPort) {
+    if (data.nodeInputPort)
         ui->inputPortEdit->setText(QString::number(data.nodeInputPort));
-    }
 }
 
 cs::Data cs::Configurator::uiData() const
@@ -113,6 +117,19 @@ cs::Hosts cs::Configurator::uiHosts() const
     }
 
     return hosts;
+}
+
+QValidator* cs::Configurator::createPortValidator()
+{
+    constexpr static int minPort = 1024;
+    constexpr static int maxPort = 65535;
+    return new QIntValidator(minPort, maxPort, this);
+}
+
+QValidator* cs::Configurator::createIpValidator()
+{
+    QRegularExpression regexpr("[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}");
+    return new QRegularExpressionValidator(regexpr, this);
 }
 
 void cs::Configurator::onApplyButtonClicked()
@@ -157,7 +174,6 @@ void cs::Configurator::onBrowseButtonCliecked()
     Hosts hosts;
     serializer >> hosts;
 
-    // to ui
     ui->listEdit->setText(fileName);
     updateUi(hosts);
 }

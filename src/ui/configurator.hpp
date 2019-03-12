@@ -6,6 +6,8 @@
 #include <core/common.hpp>
 #include <core/hostserializer.hpp>
 
+class QValidator;
+
 namespace Ui
 {
     class Configurator;
@@ -25,12 +27,16 @@ namespace cs
         Ui::Configurator* ui;
 
         void setupUi();
+        void setupValidators();
 
         void updateUi(const Data& data);
         Data uiData() const;
 
         void updateUi(const Hosts& hosts);
         Hosts uiHosts() const;
+
+        QValidator* createPortValidator();
+        QValidator* createIpValidator();
 
     private slots:
         void onApplyButtonClicked();
