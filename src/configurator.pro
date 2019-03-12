@@ -15,14 +15,17 @@ HEADERS += \
     core/common.hpp \
     core/serializer.hpp \
     core/converter.hpp \
-    core/hostserializer.hpp
+    core/hostserializer.hpp \
+    core/utils.hpp \
+    ui/ave.h
 
 SOURCES += \
     main.cpp \
     ui/configurator.cpp \
     core/serializer.cpp \
     core/converter.cpp \
-    core/hostserializer.cpp
+    core/hostserializer.cpp \
+    ui/ave.cpp
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

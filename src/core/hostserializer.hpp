@@ -4,6 +4,8 @@
 #include <QObject>
 #include <QList>
 
+#include <optional>
+
 namespace cs
 {
     struct Host
@@ -24,6 +26,9 @@ namespace cs
         // try to get host list from file
         Hosts deserialize();
         void serialize(const Hosts& hosts);
+
+        static std::optional<Host> split(const QString& str);
+        static QString combine(const Host& host);
 
     private:
         QString name;

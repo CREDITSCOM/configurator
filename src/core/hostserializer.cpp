@@ -1,30 +1,11 @@
 #include "hostserializer.hpp"
 #include <QDebug>
-#include <QRegularExpression>
-#include <QRegularExpressionMatch>
-#include <QRegularExpressionMatchIterator>
+#include <core/utils.hpp>
 
 cs::HostSerializer::HostSerializer(const QString& fileName, QObject* parent):
     QObject(parent),
     name(fileName)
 {
-}
-
-static QStringList searchExpression(const QRegularExpression& expression, const QString& source)
-{
-    QRegularExpressionMatchIterator iter = expression.globalMatch(source);
-    QStringList result;
-
-    while (iter.hasNext())
-    {
-        QRegularExpressionMatch match = iter.next();
-
-        if (match.hasMatch()) {
-            result.append(match.captured());
-        }
-    }
-
-    return result;
 }
 
 cs::Hosts cs::HostSerializer::deserialize()
@@ -44,20 +25,18 @@ cs::Hosts cs::HostSerializer::deserialize()
     QRegularExpression ipRegExpr("[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}");
     QRegularExpression portRegExpr(":[0-9]{2,5}");
 
-    QStringList ipList = searchExpression(ipRegExpr, source);
-    QStringList portList = searchExpression(portRegExpr, source);
+    QStringList ipList = Utils::searchExpression(ipRegExpr, source);
+    QStringList portList = Utils::searchExpression(portRegExpr, source);
 
-    if (ipList.size() != portList.size()) {
+    if (ipList.size() != portList.size())
         return hosts;
-    }
 
     for (int i = 0; i < ipList.size(); ++i)
     {
-        if (portList[i].contains(":")) {
+        if (portList[i].contains(":"))
             portList[i].remove(":");
-        }
 
-        hosts.append(cs::Host {ipList[i], portList[i].toInt()});
+        hosts.append(cs::Host { ipList[i], portList[i].toInt() });
     }
 
     return hosts;
@@ -65,7 +44,8 @@ cs::Hosts cs::HostSerializer::deserialize()
 
 void cs::HostSerializer::serialize(const cs::Hosts& hosts)
 {
-    if (QFile::exists(name)) {
+    if (QFile::exists(name))
+    {
         QFile::remove(name);
         return;
     }
@@ -75,11 +55,33 @@ void cs::HostSerializer::serialize(const cs::Hosts& hosts)
 
     QTextStream stream(&file);
 
-    for (const auto& host : hosts) {
+    for (const auto& host : hosts)
         stream << host.ip << ':' << host.port << endl;
-    }
 
     file.close();
+}
+
+std::optional<cs::Host> cs::HostSerializer::split(const QString& str)
+{
+    if (!str.contains(":"))
+        return std::nullopt;
+
+    QRegularExpression ipRegExpr("[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}");
+    QRegularExpression portRegExpr(":[0-9]{2,5}");
+
+    QRegularExpressionMatch ipMatch = ipRegExpr.match(str);
+    QRegularExpressionMatch portMatch = portRegExpr.match(str);
+
+    if (!ipMatch.hasMatch() || !portMatch.hasMatch())
+        return std::nullopt;
+
+    cs::Host host { ipMatch.captured(), portMatch.captured().remove(":").toInt() };
+    return std::make_optional(std::move(host));
+}
+
+QString cs::HostSerializer::combine(const cs::Host& host)
+{
+    return host.ip + ":" + QString::number(host.port);
 }
 
 bool cs::operator==(const cs::Host& lhs, const cs::Host& rhs)

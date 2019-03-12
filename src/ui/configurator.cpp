@@ -2,7 +2,12 @@
 #include "ui_configurator.h"
 
 #include <core/serializer.hpp>
+
 #include <QFile>
+#include <QFileDialog>
+#include <QRegularExpression>
+#include <QRegularExpressionMatch>
+#include <QRegularExpressionMatchIterator>
 
 cs::Configurator::Configurator(QWidget* parent):
     QWidget(parent),
@@ -12,6 +17,8 @@ cs::Configurator::Configurator(QWidget* parent):
 
     QObject::connect(ui->applyButton, &QPushButton::clicked, this, &Configurator::onApplyButtonClicked);
     QObject::connect(ui->boostrapTypeBox, &QComboBox::currentTextChanged, this, &Configurator::onBoostrapButtonClicked);
+    QObject::connect(ui->saveListButton, &QPushButton::clicked, this, &Configurator::onSaveButtonClicked);
+    QObject::connect(ui->browseListButton, &QPushButton::clicked, this, &Configurator::onBrowseButtonCliecked);
 }
 
 cs::Configurator::~Configurator()
@@ -42,6 +49,7 @@ void cs::Configurator::setupUi()
     updateUi(serializer.readData());
 
     resize(minimumSize());
+    onBoostrapButtonClicked(ui->boostrapTypeBox->currentText());
 }
 
 void cs::Configurator::updateUi(const cs::Data& data)
@@ -83,6 +91,30 @@ cs::Data cs::Configurator::uiData() const
     return data;
 }
 
+void cs::Configurator::updateUi(const cs::Hosts& hosts)
+{
+    ui->listWidget->clear();
+
+    for (const auto& host : hosts)
+        ui->listWidget->addItem(cs::HostSerializer::combine(host));
+}
+
+cs::Hosts cs::Configurator::uiHosts() const
+{
+    cs::Hosts hosts;
+
+    for (int i = 0; ui->listWidget->count(); ++i)
+    {
+        QListWidgetItem* item = ui->listWidget->item(i);
+        std::optional<cs::Host> host = cs::HostSerializer::split(item->text());
+
+        if (host)
+            hosts.append(std::move(host).value());
+    }
+
+    return hosts;
+}
+
 void cs::Configurator::onApplyButtonClicked()
 {
     cs::Serializer seriazler(cs::Literals::configFileName);
@@ -101,4 +133,31 @@ void cs::Configurator::onBoostrapButtonClicked(const QString& text)
         ui->listBox->setVisible(true);
         resize(maximumSize());
     }
+}
+
+void cs::Configurator::onSaveButtonClicked()
+{
+    QString path = ui->listEdit->text();
+
+    if (path.isEmpty())
+    {
+        path = QFileDialog::getExistingDirectory(this, "Choose directory", QApplication::applicationDirPath());
+        path += "/" + cs::Literals::hostsFileName;
+    }
+
+    cs::HostSerializer serializer(path);
+    serializer << uiHosts();
+}
+
+void cs::Configurator::onBrowseButtonCliecked()
+{
+    QString fileName = QFileDialog::getOpenFileName(this, "Open " + cs::Literals::hostsFileName, QApplication::applicationDirPath(), "*.txt");
+
+    HostSerializer serializer(fileName);
+    Hosts hosts;
+    serializer >> hosts;
+
+    // to ui
+    ui->listEdit->setText(fileName);
+    updateUi(hosts);
 }

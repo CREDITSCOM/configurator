@@ -2,7 +2,9 @@
 #define CONFIGURATOR_HPP
 
 #include <QWidget>
+
 #include <core/common.hpp>
+#include <core/hostserializer.hpp>
 
 namespace Ui
 {
@@ -27,9 +29,14 @@ namespace cs
         void updateUi(const Data& data);
         Data uiData() const;
 
+        void updateUi(const Hosts& hosts);
+        Hosts uiHosts() const;
+
     private slots:
         void onApplyButtonClicked();
         void onBoostrapButtonClicked(const QString& text);
+        void onSaveButtonClicked();
+        void onBrowseButtonCliecked();
     };
 }
 

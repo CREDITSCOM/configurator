@@ -13,6 +13,7 @@ namespace cs
         inline const static QString listType = QString("list");
         inline const static QString signalServerType = QString("signal_server");
         inline const static QString configFileName = QString("config.ini");
+        inline const static QString hostsFileName = QString("hosts.txt");
 
         // keys
         inline const static QString paramsKey = QString("params");
