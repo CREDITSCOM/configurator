@@ -26,9 +26,8 @@ void cstests::Test_HostSerializer::deserialize()
 
     const QString fileName = "test.txt";
 
-    if (QFile::exists(fileName)) {
+    if (QFile::exists(fileName))
         QFile::remove(fileName);
-    }
 
     {
         QFile file(fileName);
@@ -64,9 +63,18 @@ void cstests::Test_HostSerializer::serialize()
     cs::Hosts list;
     serializer >> list;
 
-    if (QFile::exists(fileName)) {
+    if (QFile::exists(fileName))
         QFile::remove(fileName);
-    }
 
     QCOMPARE(list, expectedList);
+}
+
+void cstests::Test_HostSerializer::split()
+{
+    QString data = "192.168.0.1:6000";
+    std::optional<cs::Host> result = cs::HostSerializer::split(data);
+
+    QCOMPARE(result.has_value(), true);
+    QCOMPARE(result.value().ip, "192.168.0.1");
+    QCOMPARE(result.value().port, 6000);
 }
