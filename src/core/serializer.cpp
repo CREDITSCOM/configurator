@@ -11,8 +11,9 @@ cs::Serializer::Serializer(const QString& fileName, QObject* parent):
     bool exists = QFile::exists(fileName);
     settings = std::make_unique<QSettings>(fileName, QSettings::Format::IniFormat);
 
-    if (!exists)
+    if (!exists) {
         writeDefaultData();
+    }
 }
 
 cs::Data cs::Serializer::readData() const
@@ -21,41 +22,49 @@ cs::Data cs::Serializer::readData() const
 
     settings->beginGroup(cs::Literals::paramsKey);
 
-    if (settings->contains(cs::Literals::nodeTypeParameter))
+    if (settings->contains(cs::Literals::nodeTypeParameter)) {
         data.nodeType = settings->value(cs::Literals::nodeTypeParameter).value<QString>();
+    }
 
-    if (settings->contains(cs::Literals::boostrapTypeParameter))
+    if (settings->contains(cs::Literals::boostrapTypeParameter)) {
         data.boostrapType = settings->value(cs::Literals::boostrapTypeParameter).value<QString>();
+    }
 
-    if (settings->contains(cs::Literals::ipv6TypeParameter))
+    if (settings->contains(cs::Literals::ipv6TypeParameter)) {
         data.isIpv6 = settings->value(cs::Literals::ipv6TypeParameter).value<bool>();
+    }
 
     settings->endGroup();
 
     settings->beginGroup(cs::Literals::signalServerKey);
 
-    if (settings->contains(cs::Literals::ipParameter))
+    if (settings->contains(cs::Literals::ipParameter)) {
         data.signalServerIp = settings->value(cs::Literals::ipParameter).value<QString>();
+    }
 
-    if (settings->contains(cs::Literals::portParameter))
+    if (settings->contains(cs::Literals::portParameter)) {
         data.signalServerPort = settings->value(cs::Literals::portParameter).value<int>();
+    }
 
     settings->endGroup();
 
     settings->beginGroup(cs::Literals::hostInputKey);
 
-    if (settings->contains(cs::Literals::portParameter))
+    if (settings->contains(cs::Literals::portParameter)) {
         data.nodeInputPort = settings->value(cs::Literals::portParameter).value<int>();
+    }
 
     settings->endGroup();
 
     settings->beginGroup(cs::Literals::hostOutputKey);
 
-    if (settings->contains(cs::Literals::ipParameter))
+    if (settings->contains(cs::Literals::ipParameter)) {
         data.nodeIp = settings->value(cs::Literals::ipParameter).value<QString>();
+    }
 
-    if (settings->contains(cs::Literals::portParameter))
+    if (settings->contains(cs::Literals::portParameter)) {
         data.nodeOutputPort = settings->value(cs::Literals::portParameter).value<int>();
+    }
 
     return data;
 }
@@ -65,11 +74,13 @@ void cs::Serializer::writeData(const Data& data)
     // params
     settings->beginGroup(cs::Literals::paramsKey);
 
-    if (!data.nodeType.isEmpty())
+    if (!data.nodeType.isEmpty()) {
         settings->setValue(cs::Literals::nodeTypeParameter, data.nodeType);
+    }
 
-    if (!data.boostrapType.isEmpty())
+    if (!data.boostrapType.isEmpty()) {
         settings->setValue(cs::Literals::boostrapTypeParameter, data.boostrapType);
+    }
 
     settings->setValue(cs::Literals::ipv6TypeParameter, data.isIpv6);
     settings->endGroup();
@@ -77,11 +88,13 @@ void cs::Serializer::writeData(const Data& data)
     // signal_server
     settings->beginGroup(cs::Literals::signalServerKey);
 
-    if (!data.signalServerIp.isEmpty())
+    if (!data.signalServerIp.isEmpty()) {
         settings->setValue(cs::Literals::ipParameter, data.signalServerIp);
+    }
 
-    if (data.signalServerPort)
+    if (data.signalServerPort) {
         settings->setValue(cs::Literals::portParameter, data.signalServerPort);
+    }
 
     settings->endGroup();
 
@@ -93,19 +106,18 @@ void cs::Serializer::writeData(const Data& data)
     // host_output
     settings->beginGroup(cs::Literals::hostOutputKey);
 
-    if (!data.nodeIp.isEmpty() && data.nodeOutputPort)
-    {
+    if (!data.nodeIp.isEmpty() && data.nodeOutputPort) {
         settings->setValue(cs::Literals::ipParameter, data.nodeIp);
         settings->setValue(cs::Literals::portParameter, data.nodeOutputPort);
     }
-    else
-    {
+    else {
         settings->endGroup();
         settings->remove(cs::Literals::hostOutputKey);
     }
 
-    if (!settings->group().isEmpty())
+    if (!settings->group().isEmpty()) {
         settings->endGroup();
+    }
 
     emit writeCompleted();
 }
@@ -153,16 +165,16 @@ void cs::Serializer::convert()
 {
     QString fileName;
 
-    if (settings)
-    {
+    if (settings) {
         fileName = settings->fileName();
         settings.reset();
     }
 
     fileName = fileName.isEmpty() ? cs::Literals::configFileName : fileName;
 
-    if (!cs::Converter::convert(fileName))
+    if (!cs::Converter::convert(fileName)) {
         qDebug() << "Convert error occured";
+    }
 
     settings = std::make_unique<QSettings>(fileName, QSettings::IniFormat);
 }

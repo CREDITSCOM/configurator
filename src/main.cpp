@@ -11,7 +11,7 @@ int main(int argc, char *argv[])
     ave->show();
 
     cs::Configurator configurator;
-    ave->setContinuation(&configurator);
+    ave->setNext(&configurator);
 
     return a.exec();
 }

@@ -11,14 +11,14 @@ namespace cs
 
     public:
         explicit Ave(QWidget* parent = nullptr);
-        void setContinuation(QWidget* widget);
+        void setNext(QWidget* widget);
 
     protected:
         virtual void showEvent(QShowEvent* event) override;
         void doOnce();
 
     private:
-        QWidget* ptr = nullptr;
+        QWidget* next = nullptr;
     };
 }
 

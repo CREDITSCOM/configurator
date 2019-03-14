@@ -26,8 +26,9 @@ void cstests::Test_HostSerializer::deserialize()
 
     const QString fileName = "test.txt";
 
-    if (QFile::exists(fileName))
+    if (QFile::exists(fileName)) {
         QFile::remove(fileName);
+    }
 
     {
         QFile file(fileName);
@@ -63,8 +64,9 @@ void cstests::Test_HostSerializer::serialize()
     cs::Hosts list;
     serializer >> list;
 
-    if (QFile::exists(fileName))
+    if (QFile::exists(fileName)) {
         QFile::remove(fileName);
+    }
 
     QCOMPARE(list, expectedList);
 }

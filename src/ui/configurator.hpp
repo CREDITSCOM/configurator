@@ -6,10 +6,12 @@
 #include <core/common.hpp>
 #include <core/hostserializer.hpp>
 
-class QValidator;
+#include <mutex>
 
-namespace Ui
-{
+class QValidator;
+class QListWidgetItem;
+
+namespace Ui {
     class Configurator;
 }
 
@@ -27,7 +29,7 @@ namespace cs
         Ui::Configurator* ui;
 
         void setupUi();
-        void setupValidators();     
+        void setupValidators();
         void setupHostList();
 
         void updateUi(const Data& data);
@@ -36,12 +38,17 @@ namespace cs
         void updateUi(const Hosts& hosts);
         Hosts uiHosts() const;
 
+        void addHostListEmptyObject();
+        bool validateItemText(QListWidgetItem* item);
+        bool isEmptyItemExists();
+
     private slots:
         void onApplyButtonClicked();
         void onBoostrapButtonClicked(const QString& text);
         void onSaveButtonClicked();
         void onBrowseButtonCliecked();
-        void onListItemClicked(const QModelIndex& index);
+        void onRunButtonPressed();
+        void onHostListItemChanged(QListWidgetItem* item);
     };
 }
 

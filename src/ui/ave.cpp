@@ -10,7 +10,7 @@
 
 #include <mutex>
 
-constexpr int timeOut = 2500;
+constexpr int timeOut = 2000;
 static std::once_flag done;
 
 cs::Ave::Ave(QWidget* parent):
@@ -30,12 +30,15 @@ cs::Ave::Ave(QWidget* parent):
     QRect desktopRect = QApplication::desktop()->availableGeometry(this);
     QPoint center = desktopRect.center();
 
-    move(static_cast<int>(center.x()-width() * 0.5), static_cast<int>(center.y()-height() * 0.5));
+    int w = static_cast<int>(center.x() - width() * 0.5);
+    int h = static_cast<int>(center.y() - height() * 0.5);
+
+    move(w, h);
 }
 
-void cs::Ave::setContinuation(QWidget* widget)
+void cs::Ave::setNext(QWidget* widget)
 {
-    ptr = widget;
+    next = widget;
 }
 
 void cs::Ave::showEvent(QShowEvent* event)
@@ -47,10 +50,10 @@ void cs::Ave::showEvent(QShowEvent* event)
 void cs::Ave::doOnce()
 {
     QTimer::singleShot(timeOut, Qt::TimerType::PreciseTimer, [this] {
-        if (ptr)
+        if (next)
         {
-            ptr->show();
-            ptr->setFocus();
+            next->show();
+            next->setFocus();
         }
 
         delete this;

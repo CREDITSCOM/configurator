@@ -13,8 +13,7 @@ cs::Hosts cs::HostSerializer::deserialize()
     QFile file(name);
     cs::Hosts hosts;
 
-    if (!file.open(QIODevice::ReadOnly))
-    {
+    if (!file.open(QIODevice::ReadOnly)) {
         qDebug() << "Deserialization of hosts failed, can not access file " << name;
         return hosts;
     }
@@ -28,13 +27,14 @@ cs::Hosts cs::HostSerializer::deserialize()
     QStringList ipList = Utils::searchExpression(ipRegExpr, source);
     QStringList portList = Utils::searchExpression(portRegExpr, source);
 
-    if (ipList.size() != portList.size())
+    if (ipList.size() != portList.size()) {
         return hosts;
+    }
 
-    for (int i = 0; i < ipList.size(); ++i)
-    {
-        if (portList[i].contains(":"))
+    for (int i = 0; i < ipList.size(); ++i) {
+        if (portList[i].contains(":")) {
             portList[i].remove(":");
+        }
 
         hosts.append(cs::Host { ipList[i], portList[i].toInt() });
     }
@@ -44,8 +44,7 @@ cs::Hosts cs::HostSerializer::deserialize()
 
 void cs::HostSerializer::serialize(const cs::Hosts& hosts)
 {
-    if (QFile::exists(name))
-    {
+    if (QFile::exists(name)) {
         QFile::remove(name);
         return;
     }
@@ -55,16 +54,18 @@ void cs::HostSerializer::serialize(const cs::Hosts& hosts)
 
     QTextStream stream(&file);
 
-    for (const auto& host : hosts)
+    for (const auto& host : hosts) {
         stream << host.ip << ':' << host.port << endl;
+    }
 
     file.close();
 }
 
 std::optional<cs::Host> cs::HostSerializer::split(const QString& str)
 {
-    if (!str.contains(":"))
+    if (!str.contains(":")) {
         return std::nullopt;
+    }
 
     QRegularExpression ipRegExpr("[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}");
     QRegularExpression portRegExpr(":[0-9]{2,5}");
@@ -72,8 +73,9 @@ std::optional<cs::Host> cs::HostSerializer::split(const QString& str)
     QRegularExpressionMatch ipMatch = ipRegExpr.match(str);
     QRegularExpressionMatch portMatch = portRegExpr.match(str);
 
-    if (!ipMatch.hasMatch() || !portMatch.hasMatch())
+    if (!ipMatch.hasMatch() || !portMatch.hasMatch()) {
         return std::nullopt;
+    }
 
     cs::Host host { ipMatch.captured(), portMatch.captured().remove(":").toInt() };
     return std::make_optional(std::move(host));

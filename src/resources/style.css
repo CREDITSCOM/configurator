@@ -4,15 +4,15 @@ QWidget#configurator {
     border-radius: 20px;
 }
 
-QLabel {
+.QLabel {
     color: white;
 }
 
-QGroupBox {
+.QGroupBox {
     color: white;
 }
 
-QCheckBox {
+.QCheckBox {
     color: white;
 }
 

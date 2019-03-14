@@ -23,4 +23,6 @@ QValidator* cs::ValidatorFactory::create(cs::ValidatorFactory::Type type, QObjec
             return new QRegularExpressionValidator(regexpr, parent);
         }
     }
+
+    return nullptr;
 }
