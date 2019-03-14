@@ -1,6 +1,7 @@
 #include "configurator.hpp"
 #include "ui_configurator.h"
 
+#include <ui/validatorfactory.hpp>
 #include <core/serializer.hpp>
 
 #include <QFile>
@@ -55,10 +56,15 @@ void cs::Configurator::setupUi()
 
 void cs::Configurator::setupValidators()
 {
-    ui->outputPortEdit->setValidator(createPortValidator());
-    ui->inputPortEdit->setValidator(createPortValidator());
+    ui->outputPortEdit->setValidator(ValidatorFactory::create(ValidatorFactory::Type::Port, this));
+    ui->inputPortEdit->setValidator(ValidatorFactory::create(ValidatorFactory::Type::Port, this));
 
-    ui->outputIpEdit->setValidator(createIpValidator());
+    ui->outputIpEdit->setValidator(ValidatorFactory::create(ValidatorFactory::Type::Ip, this));
+}
+
+void cs::Configurator::setupHostList()
+{
+
 }
 
 void cs::Configurator::updateUi(const cs::Data& data)
@@ -119,19 +125,6 @@ cs::Hosts cs::Configurator::uiHosts() const
     return hosts;
 }
 
-QValidator* cs::Configurator::createPortValidator()
-{
-    constexpr static int minPort = 1024;
-    constexpr static int maxPort = 65535;
-    return new QIntValidator(minPort, maxPort, this);
-}
-
-QValidator* cs::Configurator::createIpValidator()
-{
-    QRegularExpression regexpr("[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}");
-    return new QRegularExpressionValidator(regexpr, this);
-}
-
 void cs::Configurator::onApplyButtonClicked()
 {
     cs::Serializer seriazler(cs::Literals::configFileName);
@@ -176,4 +169,9 @@ void cs::Configurator::onBrowseButtonCliecked()
 
     ui->listEdit->setText(fileName);
     updateUi(hosts);
+}
+
+void cs::Configurator::onListItemClicked(const QModelIndex& index)
+{
+
 }

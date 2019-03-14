@@ -27,7 +27,8 @@ namespace cs
         Ui::Configurator* ui;
 
         void setupUi();
-        void setupValidators();
+        void setupValidators();     
+        void setupHostList();
 
         void updateUi(const Data& data);
         Data uiData() const;
@@ -35,14 +36,12 @@ namespace cs
         void updateUi(const Hosts& hosts);
         Hosts uiHosts() const;
 
-        QValidator* createPortValidator();
-        QValidator* createIpValidator();
-
     private slots:
         void onApplyButtonClicked();
         void onBoostrapButtonClicked(const QString& text);
         void onSaveButtonClicked();
         void onBrowseButtonCliecked();
+        void onListItemClicked(const QModelIndex& index);
     };
 }
 
