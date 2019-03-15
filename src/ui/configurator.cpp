@@ -4,6 +4,9 @@
 #include <ui/validatorfactory.hpp>
 #include <core/serializer.hpp>
 
+#include <map>
+#include <thread>
+
 #include <QFile>
 #include <QFileDialog>
 #include <QMessageBox>
@@ -261,7 +264,20 @@ void cs::Configurator::onRunButtonPressed()
         box.exec();
     }
     else {
-        std::system(cs::Literals::cslauncherFilename.toLatin1().data());
+        constexpr auto timeout = 2000;
+        std::map<const char *, std::thread> spawners;
+
+        for (auto cmd : Cmds::cmds) {
+            spawners.emplace(cmd, [cmd]() {
+                std::system(cmd);
+            });
+
+            spawners[cmd].detach();
+            std::this_thread::sleep_for(std::chrono::milliseconds(timeout));
+        }
+
+        onApplyButtonClicked();
+        QApplication::exit();
     }
 }
 

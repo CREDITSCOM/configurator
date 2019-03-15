@@ -7,7 +7,6 @@ if (MSVC) {
 }
 
 CONFIG += app_bundle
-
 DEFINES += QT_DEPRECATED_WARNINGS
 
 HEADERS += \
@@ -39,3 +38,8 @@ FORMS += \
 
 RESOURCES += \
     res.qrc
+
+#for win app icon
+win32 {
+    RC_ICONS += resources/cs.ico
+}

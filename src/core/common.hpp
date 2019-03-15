@@ -53,6 +53,15 @@ namespace cs
     const int defaultSignalServerPort = 6000;
     const int defaultHostInputPort = 9000;
 
+    struct Cmds
+    {
+        constexpr inline static auto cmds = {
+            "start java -jar contract-executor/target/contract-executor.jar",
+            "start java -jar wallet-desktop/target/wallet-desktop.jar",
+            "client",
+        };
+    };
+
     struct Data
     {
         QString nodeType;
