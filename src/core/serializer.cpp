@@ -125,7 +125,7 @@ void cs::Serializer::writeData(const Data& data)
 void cs::Serializer::writeDefaultData()
 {
     cs::Data data;
-    data.nodeType = cs::Literals::routerType;
+    data.nodeType = cs::Literals::clientType;
     data.boostrapType = cs::Literals::signalServerType;
     data.isIpv6 = false;
     data.nodeInputPort = cs::defaultHostInputPort;
@@ -141,20 +141,6 @@ void cs::Serializer::writeDefaultData()
     settings->setValue("Destination", R"("Console")");
     settings->setValue("Filter", "%Severity% >= info");
     settings->setValue("Format", R"("[%TimeStamp%] %Message%")");
-
-    settings->endGroup();
-
-    // sinks.file
-    settings->beginGroup(cs::Literals::sinksFileKey);
-
-    settings->setValue("Destination", "TextFile");
-    settings->setValue("Filter", "%Severity% >= debug");
-    settings->setValue("Format", R"("[%TimeStamp%] [%ThreadID%] [%Severity%] %Message%")");
-    settings->setValue("AutoFlush", true);
-    settings->setValue("Target", "log");
-    settings->setValue("FileName", R"("log/log%N_%Y_%m_%d.txt")");
-    settings->setValue("RotationSize", 52428800);
-    settings->setValue("MaxFiles", 4);
 
     settings->endGroup();
 

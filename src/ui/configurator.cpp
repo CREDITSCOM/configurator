@@ -67,6 +67,9 @@ void cs::Configurator::setupValidators()
     ui->outputPortEdit->setValidator(ValidatorFactory::create(ValidatorFactory::Type::Port, this));
     ui->inputPortEdit->setValidator(ValidatorFactory::create(ValidatorFactory::Type::Port, this));
 
+    ui->serverIpEdit->setValidator(ValidatorFactory::create(ValidatorFactory::Type::Ip, this));
+    ui->serverPortEdit->setValidator(ValidatorFactory::create(ValidatorFactory::Type::Port, this));
+
     ui->outputIpEdit->setValidator(ValidatorFactory::create(ValidatorFactory::Type::Ip, this));
 }
 
@@ -88,19 +91,11 @@ void cs::Configurator::setupHostList()
 
 void cs::Configurator::updateUi(const cs::Data& data)
 {
-    if (!data.nodeType.isEmpty()) {
-        ui->nodeTypeComboBox->setCurrentText(data.nodeType);
-    }
-
-    if (!data.boostrapType.isEmpty()) {
-        ui->boostrapTypeBox->setCurrentText(data.boostrapType);
-    }
-
+    ui->nodeTypeComboBox->setCurrentText(data.nodeType);
+    ui->boostrapTypeBox->setCurrentText(data.boostrapType);
     ui->ipv6CheckBox->setChecked(data.isIpv6);
-
-    if (!data.nodeIp.isEmpty()) {
-        ui->outputIpEdit->setText(data.nodeIp);
-    }
+    ui->outputIpEdit->setText(data.nodeIp);
+    ui->serverIpEdit->setText(data.signalServerIp);
 
     if (data.nodeOutputPort) {
         ui->outputPortEdit->setText(QString::number(data.nodeOutputPort));
@@ -108,6 +103,10 @@ void cs::Configurator::updateUi(const cs::Data& data)
 
     if (data.nodeInputPort) {
         ui->inputPortEdit->setText(QString::number(data.nodeInputPort));
+    }
+
+    if (data.signalServerPort) {
+        ui->serverPortEdit->setText(QString::number(data.signalServerPort));
     }
 }
 
@@ -121,6 +120,14 @@ cs::Data cs::Configurator::uiData() const
     data.nodeIp = ui->outputIpEdit->text();
     data.nodeOutputPort = ui->outputPortEdit->text().toInt();
     data.nodeInputPort = ui->inputPortEdit->text().toInt();
+
+    if (!ui->serverIpEdit->text().isEmpty()) {
+        data.signalServerIp = ui->serverIpEdit->text();
+    }
+
+    if (!ui->serverPortEdit->text().isEmpty()) {
+        data.signalServerPort = ui->serverPortEdit->text().toInt();
+    }
 
     return data;
 }

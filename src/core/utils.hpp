@@ -16,12 +16,12 @@ namespace cs
             QRegularExpressionMatchIterator iter = expression.globalMatch(source);
             QStringList result;
 
-            while (iter.hasNext())
-            {
+            while (iter.hasNext()) {
                 QRegularExpressionMatch match = iter.next();
 
-                if (match.hasMatch())
+                if (match.hasMatch()) {
                     result.append(match.captured());
+                }
             }
 
             return result;
