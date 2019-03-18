@@ -135,12 +135,21 @@ void cs::Serializer::writeDefaultData()
 
     writeData(data);
 
+    // api
+    settings->beginGroup("api");
+    settings->setValue("apiexec_port", "9070");
+    settings->endGroup();
+
+    settings->beginGroup(cs::Literals::paramsKey);
+    settings->setValue("hosts_filename", cs::Literals::hostsFileName);
+    settings->endGroup();
+
     // sinks.default
     settings->beginGroup(cs::Literals::sinksDefaultKey);
 
     settings->setValue("Destination", R"("Console")");
     settings->setValue("Filter", "%Severity% >= info");
-    settings->setValue("Format", R"("[%TimeStamp%] %Message%")");
+    settings->setValue("Format", R"("[%Severity%] %Message%")");
 
     settings->endGroup();
 

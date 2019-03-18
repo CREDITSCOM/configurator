@@ -22,7 +22,7 @@ namespace cs
         inline const static QString paramsKey = QString("params");
         inline const static QString signalServerKey = QString("signal_server");
         inline const static QString hostInputKey = QString("host_input");
-        inline const static QString hostOutputKey = QString("host_output");
+        inline const static QString hostOutputKey = QString("host_address");
 
         // sinks
         inline const static QString sinksConsoleKey = QString("Sinks.Console");

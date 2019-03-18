@@ -207,7 +207,7 @@
          <item row="1" column="2">
           <widget class="QLabel" name="outputPortLabel">
            <property name="text">
-            <string>Output port</string>
+            <string>Public port</string>
            </property>
           </widget>
          </item>
@@ -221,7 +221,7 @@
          <item row="1" column="0">
           <widget class="QLabel" name="outputIpLabel">
            <property name="text">
-            <string>Output ip</string>
+            <string>Public ip</string>
            </property>
           </widget>
          </item>
