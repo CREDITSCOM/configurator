@@ -3,6 +3,7 @@
 
 #include <ui/validatorfactory.hpp>
 #include <core/serializer.hpp>
+#include <core/utils.hpp>
 
 #include <map>
 #include <thread>
@@ -66,6 +67,7 @@ void cs::Configurator::setupUi()
     updateUi(serializer.readData());
 
     resize(minimumSize());
+    move(Utils::desktopCenter(this));
 
     onBoostrapButtonClicked(ui->boostrapTypeBox->currentText());
 }

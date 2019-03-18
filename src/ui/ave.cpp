@@ -9,6 +9,7 @@
 #include <QApplication>
 
 #include <mutex>
+#include <core/utils.hpp>
 
 constexpr int timeOut = 2000;
 static std::once_flag done;
@@ -27,13 +28,7 @@ cs::Ave::Ave(QWidget* parent):
     label->setAutoFillBackground(true);
     label->setPixmap(QPixmap::fromImage(QImage(":/resources/credits_bg.jpg")));
 
-    QRect desktopRect = QApplication::desktop()->availableGeometry(this);
-    QPoint center = desktopRect.center();
-
-    int w = static_cast<int>(center.x() - width() * 0.5);
-    int h = static_cast<int>(center.y() - height() * 0.5);
-
-    move(w, h);
+    move(Utils::desktopCenter(this));
 }
 
 void cs::Ave::setNext(QWidget* widget)
