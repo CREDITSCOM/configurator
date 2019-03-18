@@ -46,6 +46,10 @@ void cs::Configurator::setupUi()
     ui->setupUi(this);
     ui->listBox->setVisible(false);
 
+#if __linux__
+    ui->runButton->setVisible(false);
+#endif
+
     ui->boostrapTypeBox->addItems(cs::Literals::boostrapTypes);
     ui->nodeTypeComboBox->addItems(cs::Literals::nodeTypes);
 
@@ -254,34 +258,22 @@ void cs::Configurator::onBrowseButtonCliecked()
 
 void cs::Configurator::onRunButtonPressed()
 {
-    if (!QFile::exists(cs::Literals::cslauncherFilename)) {
-        QMessageBox box;
-        box.setIcon(QMessageBox::Icon::Critical);
-        box.setText("CS Node configurator");
-        box.setInformativeText("cs-launcher.exe not found, can not run process");
-        box.setStandardButtons(QMessageBox::Ok);
-        box.setWindowIcon(QIcon(":/resources/cs.ico"));
+    constexpr auto timeout = 2000;
+    std::map<const char *, std::thread> spawners;
 
-        box.exec();
+    for (auto cmd : Cmds::cmds) {
+        spawners.emplace(cmd, [cmd]() {
+            if (std::system(cmd)) {
+                qDebug() << "cmd error for " << cmd;
+            }
+        });
+
+        spawners[cmd].detach();
+        std::this_thread::sleep_for(std::chrono::milliseconds(timeout));
     }
-    else {
-        constexpr auto timeout = 2000;
-        std::map<const char *, std::thread> spawners;
 
-        for (auto cmd : Cmds::cmds) {
-            spawners.emplace(cmd, [cmd]() {
-                if (std::system(cmd)) {
-                    qDebug() << "cmd error for " << cmd;
-                }
-            });
-
-            spawners[cmd].detach();
-            std::this_thread::sleep_for(std::chrono::milliseconds(timeout));
-        }
-
-        onApplyButtonClicked();
-        QApplication::exit();
-    }
+    onApplyButtonClicked();
+    QApplication::exit();
 }
 
 void cs::Configurator::onHostListItemChanged(QListWidgetItem* item)
