@@ -37,7 +37,7 @@
      <x>0</x>
      <y>0</y>
      <width>391</width>
-     <height>546</height>
+     <height>552</height>
     </rect>
    </property>
    <layout class="QVBoxLayout" name="mainLayout">
@@ -81,7 +81,7 @@
           <widget class="QComboBox" name="boostrapTypeBox">
            <property name="minimumSize">
             <size>
-             <width>90</width>
+             <width>100</width>
              <height>22</height>
             </size>
            </property>
@@ -162,7 +162,7 @@
            </property>
            <property name="minimumSize">
             <size>
-             <width>90</width>
+             <width>100</width>
              <height>22</height>
             </size>
            </property>

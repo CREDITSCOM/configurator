@@ -7,6 +7,7 @@
 #include <map>
 #include <thread>
 
+#include <QDebug>
 #include <QFile>
 #include <QFileDialog>
 #include <QMessageBox>
@@ -269,7 +270,9 @@ void cs::Configurator::onRunButtonPressed()
 
         for (auto cmd : Cmds::cmds) {
             spawners.emplace(cmd, [cmd]() {
-                std::system(cmd);
+                if (std::system(cmd)) {
+                    qDebug() << "cmd error for " << cmd;
+                }
             });
 
             spawners[cmd].detach();
