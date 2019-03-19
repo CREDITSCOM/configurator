@@ -49,6 +49,7 @@ namespace cs
         void onBrowseButtonCliecked();
         void onRunButtonPressed();
         void onHostListItemChanged(QListWidgetItem* item);
+        void onAddressUsed(bool state);
     };
 }
 

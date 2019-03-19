@@ -35,7 +35,6 @@ cs::Data cs::Serializer::readData() const
     }
 
     settings->endGroup();
-
     settings->beginGroup(cs::Literals::signalServerKey);
 
     if (settings->contains(cs::Literals::ipParameter)) {
@@ -47,7 +46,6 @@ cs::Data cs::Serializer::readData() const
     }
 
     settings->endGroup();
-
     settings->beginGroup(cs::Literals::hostInputKey);
 
     if (settings->contains(cs::Literals::portParameter)) {
@@ -55,7 +53,6 @@ cs::Data cs::Serializer::readData() const
     }
 
     settings->endGroup();
-
     settings->beginGroup(cs::Literals::hostOutputKey);
 
     if (settings->contains(cs::Literals::ipParameter)) {
@@ -66,11 +63,22 @@ cs::Data cs::Serializer::readData() const
         data.nodeOutputPort = settings->value(cs::Literals::portParameter).value<int>();
     }
 
+    settings->endGroup();
+    settings->beginGroup(cs::Literals::apiKey);
+
+    if (settings->contains(cs::Literals::executorPortParameter)) {
+        data.executorPort = settings->value(cs::Literals::executorPortParameter).value<int>();
+    }
+
+    settings->endGroup();
+
     return data;
 }
 
 void cs::Serializer::writeData(const Data& data)
 {
+    clear();
+
     // params
     settings->beginGroup(cs::Literals::paramsKey);
 
@@ -88,38 +96,44 @@ void cs::Serializer::writeData(const Data& data)
     // signal_server
     settings->beginGroup(cs::Literals::signalServerKey);
 
-    if (!data.signalServerIp.isEmpty()) {
+    if (!data.signalServerIp.isEmpty() && data.signalServerPort) {
         settings->setValue(cs::Literals::ipParameter, data.signalServerIp);
-    }
-
-    if (data.signalServerPort) {
         settings->setValue(cs::Literals::portParameter, data.signalServerPort);
     }
 
     settings->endGroup();
 
     // host_input
-    const QString hostInputKey = cs::Literals::hostInputKey + "/" + cs::Literals::portParameter;
+    const QString hostInputKey = cs::Literals::hostInputKey + QString("/") + cs::Literals::portParameter;
     const int hostInputPort = data.nodeInputPort ? data.nodeInputPort : cs::defaultHostInputPort;
     settings->setValue(hostInputKey, hostInputPort);
 
     // host_output
     settings->beginGroup(cs::Literals::hostOutputKey);
 
-    if (!data.nodeIp.isEmpty() && data.nodeOutputPort) {
-        settings->setValue(cs::Literals::ipParameter, data.nodeIp);
+    if (data.nodeOutputPort) {
         settings->setValue(cs::Literals::portParameter, data.nodeOutputPort);
-    }
-    else {
-        settings->endGroup();
-        settings->remove(cs::Literals::hostOutputKey);
+
+        if (!data.nodeIp.isEmpty()) {
+            settings->setValue(cs::Literals::ipParameter, data.nodeIp);
+        }
     }
 
-    if (!settings->group().isEmpty()) {
-        settings->endGroup();
-    }
+    settings->endGroup();
+
+    // api
+    settings->beginGroup(cs::Literals::apiKey);
+    settings->setValue(cs::Literals::executorPortParameter, data.executorPort);
+    settings->endGroup();
 
     emit writeCompleted();
+}
+
+void cs::Serializer::clear()
+{
+    settings->remove(cs::Literals::signalServerKey);
+    settings->remove(cs::Literals::apiKey);
+    settings->remove(cs::Literals::hostOutputKey);
 }
 
 void cs::Serializer::writeDefaultData()
@@ -131,15 +145,11 @@ void cs::Serializer::writeDefaultData()
     data.nodeInputPort = cs::defaultHostInputPort;
     data.signalServerIp = cs::defaultSignalServerIp;
     data.signalServerPort = cs::defaultSignalServerPort;
-    data.nodeOutputPort = 0;
+    data.executorPort = cs::defaultExecutorPort;
 
     writeData(data);
 
-    // api
-    settings->beginGroup("api");
-    settings->setValue("apiexec_port", "9070");
-    settings->endGroup();
-
+    // hosts
     settings->beginGroup(cs::Literals::paramsKey);
     settings->setValue("hosts_filename", cs::Literals::hostsFileName);
     settings->endGroup();

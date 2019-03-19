@@ -24,6 +24,7 @@ namespace cs
     private:
         std::unique_ptr<QSettings> settings;
 
+        void clear();
         void writeDefaultData();
         void convert();
 

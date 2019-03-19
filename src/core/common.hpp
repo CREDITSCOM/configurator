@@ -8,34 +8,36 @@ namespace cs
     struct Literals
     {
         // default program liters
-        inline const static QString configuratorTitle = QString("CS Node Configurator");
-        inline const static QString boostrap = QString("Boostrap");
-        inline const static QString routerType = QString("router");
-        inline const static QString clientType = QString("client");
-        inline const static QString listType = QString("list");
-        inline const static QString signalServerType = QString("signal_server");
-        inline const static QString configFileName = QString("config.ini");
-        inline const static QString hostsFileName = QString("hosts.txt");
-        inline const static QString cslauncherFilename = QString("cs-launcher.exe");
+        inline static auto configuratorTitle = "CS Node Configurator";
+        inline static auto boostrap = "Boostrap";
+        inline static auto routerType = "router";
+        inline static auto clientType = "client";
+        inline static auto listType = "list";
+        inline static auto signalServerType = "signal_server";
+        inline static auto configFileName = "config.ini";
+        inline static auto hostsFileName = "hosts.txt";
+        inline static auto cslauncherFilename = "cs-launcher.exe";
 
         // keys
-        inline const static QString paramsKey = QString("params");
-        inline const static QString signalServerKey = QString("signal_server");
-        inline const static QString hostInputKey = QString("host_input");
-        inline const static QString hostOutputKey = QString("host_address");
+        inline static auto paramsKey = "params";
+        inline static auto signalServerKey = "signal_server";
+        inline static auto hostInputKey = "host_input";
+        inline static auto hostOutputKey = "host_address";
+        inline static auto apiKey = "api";
 
         // sinks
-        inline const static QString sinksConsoleKey = QString("Sinks.Console");
-        inline const static QString sinksDefaultKey = QString("Sinks.Default");
-        inline const static QString sinksFileKey = QString("Sinks.File");
+        inline static auto sinksConsoleKey = "Sinks.Console";
+        inline static auto sinksDefaultKey = "Sinks.Default";
+        inline static auto sinksFileKey = "Sinks.File";
 
         // params
-        inline const static QString nodeTypeParameter = QString("node_type");
-        inline const static QString boostrapTypeParameter = QString("bootstrap_type");
-        inline const static QString ipv6TypeParameter = QString("ipv6");
+        inline static auto nodeTypeParameter = "node_type";
+        inline static auto boostrapTypeParameter = "bootstrap_type";
+        inline static auto ipv6TypeParameter = "ipv6";
+        inline static auto executorPortParameter = "apiexec_port";
 
-        inline const static QString ipParameter = QString("ip");
-        inline const static QString portParameter = QString("port");
+        inline static auto ipParameter = "ip";
+        inline static auto portParameter = "port";
 
         // ui lists
         inline const static QStringList boostrapTypes = {
@@ -52,6 +54,7 @@ namespace cs
     const QString defaultSignalServerIp = "51.38.0.1";
     const int defaultSignalServerPort = 6000;
     const int defaultHostInputPort = 9000;
+    const int defaultExecutorPort = 9070;
 
     struct Cmds
     {
@@ -74,6 +77,8 @@ namespace cs
         QString nodeIp;
         int nodeOutputPort = 0;
         int nodeInputPort = 0;
+
+        int executorPort = 0;
     };
 }
 

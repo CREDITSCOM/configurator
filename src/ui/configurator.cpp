@@ -33,6 +33,7 @@ cs::Configurator::Configurator(QWidget* parent):
     QObject::connect(ui->saveListButton, &QPushButton::clicked, this, &Configurator::onSaveButtonClicked);
     QObject::connect(ui->browseListButton, &QPushButton::clicked, this, &Configurator::onBrowseButtonCliecked);
     QObject::connect(ui->listWidget, &QListWidget::itemChanged, this, &Configurator::onHostListItemChanged);
+    QObject::connect(ui->addressCheckBox, &QCheckBox::clicked, this, &Configurator::onAddressUsed);
 }
 
 cs::Configurator::~Configurator()
@@ -70,6 +71,7 @@ void cs::Configurator::setupUi()
     move(Utils::desktopCenter(this));
 
     onBoostrapButtonClicked(ui->boostrapTypeBox->currentText());
+    onAddressUsed(ui->addressCheckBox->isChecked());
 }
 
 void cs::Configurator::setupValidators()
@@ -118,6 +120,10 @@ void cs::Configurator::updateUi(const cs::Data& data)
     if (data.signalServerPort) {
         ui->serverPortEdit->setText(QString::number(data.signalServerPort));
     }
+
+    if (data.executorPort) {
+        ui->executorPortEdit->setText(QString::number(data.executorPort));
+    }
 }
 
 cs::Data cs::Configurator::uiData() const
@@ -137,6 +143,10 @@ cs::Data cs::Configurator::uiData() const
 
     if (!ui->serverPortEdit->text().isEmpty()) {
         data.signalServerPort = ui->serverPortEdit->text().toInt();
+    }
+
+    if (!ui->executorPortEdit->text().isEmpty()) {
+        data.executorPort = ui->executorPortEdit->text().toInt();
     }
 
     return data;
@@ -211,6 +221,18 @@ bool cs::Configurator::isEmptyItemExists()
 
 void cs::Configurator::onApplyButtonClicked()
 {
+    if (!ui->outputIpEdit->text().isEmpty()) {
+        if (ui->outputPortEdit->text().isEmpty()) {
+            ui->outputIpEdit->clear();
+            ui->outputPortEdit->clear();
+        }
+    }
+
+    if (!ui->serverIpEdit->text().isEmpty() || !ui->serverPortEdit->text().isEmpty()) {
+        ui->serverIpEdit->clear();
+        ui->serverPortEdit->clear();
+    }
+
     cs::Serializer seriazler(cs::Literals::configFileName);
     seriazler.writeData(uiData());
 }
@@ -233,7 +255,7 @@ void cs::Configurator::onSaveButtonClicked()
 
     if (path.isEmpty()) {
         path = QFileDialog::getExistingDirectory(this, "Choose directory", QApplication::applicationDirPath());
-        path += "/" + cs::Literals::hostsFileName;
+        path += QString("/") + cs::Literals::hostsFileName;
 
         ui->listEdit->setText(path);
     }
@@ -244,7 +266,8 @@ void cs::Configurator::onSaveButtonClicked()
 
 void cs::Configurator::onBrowseButtonCliecked()
 {
-    QString fileName = QFileDialog::getOpenFileName(this, "Open " + cs::Literals::hostsFileName, QApplication::applicationDirPath(), "*.txt");
+    static const QString title = QString("Open ") + cs::Literals::hostsFileName;
+    QString fileName = QFileDialog::getOpenFileName(this, title, QApplication::applicationDirPath(), "*.txt");
 
     if (fileName.isEmpty()) {
         return;
@@ -319,4 +342,13 @@ void cs::Configurator::onHostListItemChanged(QListWidgetItem* item)
             addHostListEmptyObject();
         }
     }
+}
+
+void cs::Configurator::onAddressUsed(bool state)
+{
+    ui->outputIpEdit->setVisible(state);
+    ui->outputPortEdit->setVisible(state);
+
+    ui->outputIpLabel->setVisible(state);
+    ui->outputPortLabel->setVisible(state);
 }
