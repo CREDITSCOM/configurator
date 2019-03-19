@@ -16,7 +16,9 @@ namespace cs
         inline static auto signalServerType = "signal_server";
         inline static auto configFileName = "config.ini";
         inline static auto hostsFileName = "hosts.txt";
-        inline static auto cslauncherFilename = "cs-launcher.exe";
+
+        inline static auto cslauncherFileName = "cs-launcher.exe";
+        inline static auto propertySettingsFileName = "settings.properties";
 
         // keys
         inline static auto paramsKey = "params";

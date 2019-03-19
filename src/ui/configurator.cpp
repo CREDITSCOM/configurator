@@ -3,6 +3,7 @@
 
 #include <ui/validatorfactory.hpp>
 #include <core/serializer.hpp>
+#include <core/propertyserializer.hpp>
 #include <core/utils.hpp>
 
 #include <map>
@@ -66,6 +67,9 @@ void cs::Configurator::setupUi()
 
     cs::Serializer serializer(cs::Literals::configFileName);
     updateUi(serializer.readData());
+
+    cs::PropertySerializer property(cs::Literals::propertySettingsFileName);
+    property.writePort(ui->executorPortEdit->text().toInt());
 
     resize(minimumSize());
     move(Utils::desktopCenter(this));
@@ -228,13 +232,16 @@ void cs::Configurator::onApplyButtonClicked()
         }
     }
 
-    if (!ui->serverIpEdit->text().isEmpty() || !ui->serverPortEdit->text().isEmpty()) {
+    if (ui->serverIpEdit->text().isEmpty() || ui->serverPortEdit->text().isEmpty()) {
         ui->serverIpEdit->clear();
         ui->serverPortEdit->clear();
     }
 
     cs::Serializer seriazler(cs::Literals::configFileName);
     seriazler.writeData(uiData());
+
+    cs::PropertySerializer property(cs::Literals::propertySettingsFileName);
+    property.writePort(ui->executorPortEdit->text().toInt());
 }
 
 void cs::Configurator::onBoostrapButtonClicked(const QString& text)
