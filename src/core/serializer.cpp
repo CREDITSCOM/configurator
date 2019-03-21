@@ -67,7 +67,7 @@ cs::Data cs::Serializer::readData() const
     settings->beginGroup(cs::Literals::apiKey);
 
     if (settings->contains(cs::Literals::executorPortParameter)) {
-        data.executorPort = settings->value(cs::Literals::executorPortParameter).value<int>();
+        data.apiExecutorPort = settings->value(cs::Literals::executorPortParameter).value<int>();
     }
 
     settings->endGroup();
@@ -123,7 +123,7 @@ void cs::Serializer::writeData(const Data& data)
 
     // api
     settings->beginGroup(cs::Literals::apiKey);
-    settings->setValue(cs::Literals::executorPortParameter, data.executorPort);
+    settings->setValue(cs::Literals::executorPortParameter, data.apiExecutorPort);
     settings->endGroup();
 
     emit writeCompleted();
@@ -145,7 +145,7 @@ void cs::Serializer::writeDefaultData()
     data.nodeInputPort = cs::defaultHostInputPort;
     data.signalServerIp = cs::defaultSignalServerIp;
     data.signalServerPort = cs::defaultSignalServerPort;
-    data.executorPort = cs::defaultExecutorPort;
+    data.apiExecutorPort = cs::defaultExecutorPort;
 
     writeData(data);
 

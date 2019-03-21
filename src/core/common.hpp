@@ -80,7 +80,7 @@ namespace cs
         int nodeOutputPort = 0;
         int nodeInputPort = 0;
 
-        int executorPort = 0;
+        int apiExecutorPort = 0;
     };
 }
 

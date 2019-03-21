@@ -28,6 +28,10 @@ namespace cs
     private:
         Ui::Configurator* ui;
 
+        const int fixedWidth = 400;
+        const int fixedMinHeight = 310;
+        const int fixedMaxHeight = 565;
+
         void setupUi();
         void setupValidators();
         void setupHostList();
@@ -42,6 +46,10 @@ namespace cs
         bool validateItemText(QListWidgetItem* item);
         bool isEmptyItemExists();
 
+        void changeSize(QSize size);
+        void changeSize(int w, int h);
+        void changeSize();
+
     private slots:
         void onApplyButtonClicked();
         void onBoostrapButtonClicked(const QString& text);
@@ -49,7 +57,7 @@ namespace cs
         void onBrowseButtonCliecked();
         void onRunButtonPressed();
         void onHostListItemChanged(QListWidgetItem* item);
-        void onAddressUsed(bool state);
+        void onExtendSettings(bool state);
     };
 }
 

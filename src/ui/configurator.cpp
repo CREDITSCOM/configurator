@@ -34,7 +34,7 @@ cs::Configurator::Configurator(QWidget* parent):
     QObject::connect(ui->saveListButton, &QPushButton::clicked, this, &Configurator::onSaveButtonClicked);
     QObject::connect(ui->browseListButton, &QPushButton::clicked, this, &Configurator::onBrowseButtonCliecked);
     QObject::connect(ui->listWidget, &QListWidget::itemChanged, this, &Configurator::onHostListItemChanged);
-    QObject::connect(ui->addressCheckBox, &QCheckBox::clicked, this, &Configurator::onAddressUsed);
+    QObject::connect(ui->extendingCheckBox, &QCheckBox::clicked, this, &Configurator::onExtendSettings);
 }
 
 cs::Configurator::~Configurator()
@@ -71,11 +71,11 @@ void cs::Configurator::setupUi()
     cs::PropertySerializer property(cs::Literals::propertySettingsFileName);
     property.writePort(ui->executorPortEdit->text().toInt());
 
-    resize(minimumSize());
+    changeSize();
     move(Utils::desktopCenter(this));
 
     onBoostrapButtonClicked(ui->boostrapTypeBox->currentText());
-    onAddressUsed(ui->addressCheckBox->isChecked());
+    onExtendSettings(ui->extendingCheckBox->isChecked());
 }
 
 void cs::Configurator::setupValidators()
@@ -125,8 +125,8 @@ void cs::Configurator::updateUi(const cs::Data& data)
         ui->serverPortEdit->setText(QString::number(data.signalServerPort));
     }
 
-    if (data.executorPort) {
-        ui->executorPortEdit->setText(QString::number(data.executorPort));
+    if (data.apiExecutorPort) {
+        ui->apiExecutorPortEdit->setText(QString::number(data.apiExecutorPort));
     }
 }
 
@@ -149,8 +149,8 @@ cs::Data cs::Configurator::uiData() const
         data.signalServerPort = ui->serverPortEdit->text().toInt();
     }
 
-    if (!ui->executorPortEdit->text().isEmpty()) {
-        data.executorPort = ui->executorPortEdit->text().toInt();
+    if (!ui->apiExecutorPortEdit->text().isEmpty()) {
+        data.apiExecutorPort = ui->apiExecutorPortEdit->text().toInt();
     }
 
     return data;
@@ -223,6 +223,35 @@ bool cs::Configurator::isEmptyItemExists()
     return false;
 }
 
+void cs::Configurator::changeSize(QSize size)
+{
+    setFixedSize(size);
+    resize(size);
+}
+
+void cs::Configurator::changeSize(int w, int h)
+{
+    changeSize(QSize(w, h));
+}
+
+void cs::Configurator::changeSize()
+{
+    const static int delta = 40;
+
+    if (ui->listBox->isVisible() && ui->extendingCheckBox->isChecked()) {
+        changeSize(fixedWidth, fixedMaxHeight);
+    }
+    else if (ui->listBox->isVisible() && !ui->extendingCheckBox->isChecked()) {
+        changeSize(fixedWidth, fixedMaxHeight - delta);
+    }
+    else if (!ui->listBox->isVisible() && ui->extendingCheckBox->isChecked()){
+        changeSize(fixedWidth, fixedMinHeight);
+    }
+    else {
+        changeSize(fixedWidth, fixedMinHeight - delta);
+    }
+}
+
 void cs::Configurator::onApplyButtonClicked()
 {
     if (!ui->outputIpEdit->text().isEmpty()) {
@@ -241,19 +270,19 @@ void cs::Configurator::onApplyButtonClicked()
     seriazler.writeData(uiData());
 
     cs::PropertySerializer property(cs::Literals::propertySettingsFileName);
-    property.writePort(ui->executorPortEdit->text().toInt());
+    property.writePort(ui->apiExecutorPortEdit->text().toInt());
 }
 
 void cs::Configurator::onBoostrapButtonClicked(const QString& text)
 {
     if (text == cs::Literals::signalServerType) {
         ui->listBox->setVisible(false);
-        resize(minimumSize());
     }
     else {
         ui->listBox->setVisible(true);
-        resize(maximumSize());
     }
+
+    changeSize();
 }
 
 void cs::Configurator::onSaveButtonClicked()
@@ -351,11 +380,19 @@ void cs::Configurator::onHostListItemChanged(QListWidgetItem* item)
     }
 }
 
-void cs::Configurator::onAddressUsed(bool state)
+void cs::Configurator::onExtendSettings(bool state)
 {
     ui->outputIpEdit->setVisible(state);
     ui->outputPortEdit->setVisible(state);
 
     ui->outputIpLabel->setVisible(state);
     ui->outputPortLabel->setVisible(state);
+
+    ui->executorPortEdit->setVisible(state);
+    ui->executorPortLabel->setVisible(state);
+
+    ui->apiPortEdit->setVisible(state);
+    ui->apiPortLabel->setVisible(state);
+
+    changeSize();
 }
