@@ -66,8 +66,20 @@ cs::Data cs::Serializer::readData() const
     settings->endGroup();
     settings->beginGroup(cs::Literals::apiKey);
 
+    if (settings->contains(cs::Literals::apiExecutorPortParameter)) {
+        data.apiExecutorPort = settings->value(cs::Literals::apiExecutorPortParameter).value<int>();
+    }
+
     if (settings->contains(cs::Literals::executorPortParameter)) {
-        data.apiExecutorPort = settings->value(cs::Literals::executorPortParameter).value<int>();
+        data.executorPort = settings->value(cs::Literals::executorPortParameter).value<int>();
+    }
+
+    if (settings->contains(cs::Literals::ajaxPortParameter)) {
+        data.ajaxPort = settings->value(cs::Literals::ajaxPortParameter).value<int>();
+    }
+
+    if (settings->contains(cs::Literals::apiPortParameter)) {
+        data.apiPort = settings->value(cs::Literals::apiPortParameter).value<int>();
     }
 
     settings->endGroup();
@@ -77,6 +89,11 @@ cs::Data cs::Serializer::readData() const
 
 void cs::Serializer::writeData(const Data& data)
 {
+    // TODO: fix when it will be used on ui
+    int ajaxPort = settings->value(cs::Literals::apiKey + QString("/") + cs::Literals::ajaxPortParameter).toInt();
+    ajaxPort = ajaxPort ? ajaxPort : data.ajaxPort;
+    ajaxPort = ajaxPort ? ajaxPort : cs::defaultAjaxPort;
+
     clear();
 
     // params
@@ -123,7 +140,12 @@ void cs::Serializer::writeData(const Data& data)
 
     // api
     settings->beginGroup(cs::Literals::apiKey);
-    settings->setValue(cs::Literals::executorPortParameter, data.apiExecutorPort);
+
+    settings->setValue(cs::Literals::apiExecutorPortParameter, data.apiExecutorPort);
+    settings->setValue(cs::Literals::executorPortParameter, data.executorPort);
+    settings->setValue(cs::Literals::apiPortParameter, data.apiPort);
+    settings->setValue(cs::Literals::ajaxPortParameter, ajaxPort);
+
     settings->endGroup();
 
     emit writeCompleted();
@@ -145,7 +167,11 @@ void cs::Serializer::writeDefaultData()
     data.nodeInputPort = cs::defaultHostInputPort;
     data.signalServerIp = cs::defaultSignalServerIp;
     data.signalServerPort = cs::defaultSignalServerPort;
-    data.apiExecutorPort = cs::defaultExecutorPort;
+
+    data.apiExecutorPort = cs::defaultApiExecutorPort;
+    data.executorPort = cs::defautlExecutorPort;
+    data.apiPort = cs::defaultApiPort;
+    data.ajaxPort = cs::defaultAjaxPort;
 
     writeData(data);
 

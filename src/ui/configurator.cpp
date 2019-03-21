@@ -128,6 +128,14 @@ void cs::Configurator::updateUi(const cs::Data& data)
     if (data.apiExecutorPort) {
         ui->apiExecutorPortEdit->setText(QString::number(data.apiExecutorPort));
     }
+
+    if (data.executorPort) {
+        ui->executorPortEdit->setText(QString::number(data.executorPort));
+    }
+
+    if (data.apiPort) {
+        ui->apiPortEdit->setText(QString::number(data.apiPort));
+    }
 }
 
 cs::Data cs::Configurator::uiData() const
@@ -151,6 +159,14 @@ cs::Data cs::Configurator::uiData() const
 
     if (!ui->apiExecutorPortEdit->text().isEmpty()) {
         data.apiExecutorPort = ui->apiExecutorPortEdit->text().toInt();
+    }
+
+    if (!ui->executorPortEdit->text().isEmpty()) {
+        data.executorPort = ui->executorPortEdit->text().toInt();
+    }
+
+    if (!ui->apiPortEdit->text().isEmpty()) {
+        data.apiPort = ui->apiPortEdit->text().toInt();
     }
 
     return data;

@@ -36,7 +36,11 @@ namespace cs
         inline static auto nodeTypeParameter = "node_type";
         inline static auto boostrapTypeParameter = "bootstrap_type";
         inline static auto ipv6TypeParameter = "ipv6";
-        inline static auto executorPortParameter = "apiexec_port";
+
+        inline static auto apiExecutorPortParameter = "apiexec_port";
+        inline static auto executorPortParameter = "executor_port";
+        inline static auto apiPortParameter = "port";
+        inline static auto ajaxPortParameter = "ajax_port";
 
         inline static auto ipParameter = "ip";
         inline static auto portParameter = "port";
@@ -56,7 +60,10 @@ namespace cs
     const QString defaultSignalServerIp = "51.38.0.1";
     const int defaultSignalServerPort = 6000;
     const int defaultHostInputPort = 9000;
-    const int defaultExecutorPort = 9070;
+    const int defaultApiExecutorPort = 9070;
+    const int defaultApiPort = 9090;
+    const int defaultAjaxPort = 8081;
+    const int defautlExecutorPort = 9080;
 
     struct Cmds
     {
@@ -81,6 +88,9 @@ namespace cs
         int nodeInputPort = 0;
 
         int apiExecutorPort = 0;
+        int executorPort = 0;
+        int ajaxPort = 0;
+        int apiPort = 0;
     };
 }
 
