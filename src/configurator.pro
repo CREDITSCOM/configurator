@@ -19,7 +19,8 @@ HEADERS += \
     ui/ave.h \
     ui/validatorfactory.hpp \
     core/propertyserializer.hpp \
-    core/scanner.hpp
+    core/scanner.hpp \
+    structures/tree.hpp
 
 SOURCES += \
     main.cpp \
@@ -30,7 +31,8 @@ SOURCES += \
     ui/ave.cpp \
     ui/validatorfactory.cpp \
     core/propertyserializer.cpp \
-    core/scanner.cpp
+    core/scanner.cpp \
+    structures/tree.cpp
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

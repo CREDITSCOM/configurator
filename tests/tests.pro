@@ -13,6 +13,7 @@ HEADERS += \
     ../src/core/hostserializer.hpp \
     ../src/core/serializer.hpp \
     ../src/core/scanner.hpp \
+    ../src/structures/tree.hpp \
     test_scanner.hpp
 
 SOURCES += \
@@ -22,6 +23,7 @@ SOURCES += \
     ../src/core/hostserializer.cpp \
     ../src/core/serializer.cpp \
     ../src/core/scanner.cpp \
+    ../src/structures/tree.cpp \
     test_scanner.cpp
 
 INCLUDEPATH += \
