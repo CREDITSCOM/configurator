@@ -227,7 +227,14 @@
          </widget>
         </item>
         <item row="1" column="1">
-         <widget class="QLineEdit" name="inputPortEdit"/>
+         <widget class="QLineEdit" name="inputPortEdit">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+         </widget>
         </item>
         <item row="0" column="2">
          <widget class="QLabel" name="serverPortLabel">
@@ -237,19 +244,53 @@
          </widget>
         </item>
         <item row="4" column="1">
-         <widget class="QLineEdit" name="apiPortEdit"/>
+         <widget class="QLineEdit" name="apiPortEdit">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+         </widget>
         </item>
         <item row="3" column="3">
-         <widget class="QLineEdit" name="outputPortEdit"/>
+         <widget class="QLineEdit" name="outputPortEdit">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+         </widget>
         </item>
         <item row="3" column="1">
-         <widget class="QLineEdit" name="outputIpEdit"/>
+         <widget class="QLineEdit" name="outputIpEdit">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+         </widget>
         </item>
         <item row="1" column="3">
-         <widget class="QLineEdit" name="apiExecutorPortEdit"/>
+         <widget class="QLineEdit" name="apiExecutorPortEdit">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+         </widget>
         </item>
         <item row="2" column="0">
          <widget class="QCheckBox" name="ipv6CheckBox">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
           <property name="text">
            <string>Use IPv6</string>
           </property>
@@ -257,16 +298,36 @@
         </item>
         <item row="2" column="1">
          <widget class="QCheckBox" name="extendingCheckBox">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
           <property name="text">
-           <string>Extending settings</string>
+           <string>Extending</string>
           </property>
          </widget>
         </item>
         <item row="4" column="3">
-         <widget class="QLineEdit" name="executorPortEdit"/>
+         <widget class="QLineEdit" name="executorPortEdit">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+         </widget>
         </item>
         <item row="0" column="1">
-         <widget class="QLineEdit" name="serverIpEdit"/>
+         <widget class="QLineEdit" name="serverIpEdit">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+         </widget>
         </item>
         <item row="4" column="0">
          <widget class="QLabel" name="apiPortLabel">
@@ -276,7 +337,20 @@
          </widget>
         </item>
         <item row="0" column="3">
-         <widget class="QLineEdit" name="serverPortEdit"/>
+         <widget class="QLineEdit" name="serverPortEdit">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>0</height>
+           </size>
+          </property>
+         </widget>
         </item>
         <item row="3" column="0">
          <widget class="QLabel" name="outputIpLabel">
