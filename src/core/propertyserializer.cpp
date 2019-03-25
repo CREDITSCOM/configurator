@@ -4,9 +4,9 @@
 #include <QTextStream>
 
 static const char* defaultText = "node.api.host=127.0.0.1\n"
-                                 "node.api.port=9090\n"
-                                 "contract.executor.port=9080\n"
-                                 "contract.executor.node.api.port=%1";
+                                 "node.api.port=%1\n"
+                                 "contract.executor.port=%2\n"
+                                 "contract.executor.node.api.port=%3";
 
 cs::PropertySerializer::PropertySerializer(const QString& fileName, QObject* parent):
     QObject(parent),
@@ -34,7 +34,7 @@ int cs::PropertySerializer::readPort() const
     return port;
 }
 
-void cs::PropertySerializer::writePort(int port)
+void cs::PropertySerializer::write(const cs::ApiData& data)
 {
     if (QFile::exists(name)) {
         QFile::remove(name);
@@ -48,7 +48,7 @@ void cs::PropertySerializer::writePort(int port)
 
     QTextStream stream(&file);
     QString str(defaultText);
-    stream << str.arg(port);
+    stream << str.arg(data.apiPort).arg(data.executorPort).arg(data.apiExecutorPort);
 
     file.close();
 }

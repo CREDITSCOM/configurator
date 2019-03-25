@@ -74,6 +74,14 @@ namespace cs
         };
     };
 
+    struct ApiData
+    {
+        int apiExecutorPort = 0;
+        int executorPort = 0;
+        int ajaxPort = 0;
+        int apiPort = 0;
+    };
+
     struct Data
     {
         QString nodeType;
@@ -87,10 +95,7 @@ namespace cs
         int nodeOutputPort = 0;
         int nodeInputPort = 0;
 
-        int apiExecutorPort = 0;
-        int executorPort = 0;
-        int ajaxPort = 0;
-        int apiPort = 0;
+        ApiData api;
     };
 }
 

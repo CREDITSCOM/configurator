@@ -2,6 +2,7 @@
 #define PROPERTYSERIALIZER_HPP
 
 #include <QObject>
+#include <core/common.hpp>
 
 namespace cs
 {
@@ -13,7 +14,7 @@ namespace cs
         explicit PropertySerializer(const QString& fileName, QObject* parent = nullptr);
 
         int readPort() const;
-        void writePort(int port);
+        void write(const ApiData& data);
 
     private:
         QString name;

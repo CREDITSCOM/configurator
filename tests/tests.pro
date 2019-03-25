@@ -12,6 +12,8 @@ HEADERS += \
     ../src/core/converter.hpp \
     ../src/core/hostserializer.hpp \
     ../src/core/serializer.hpp \
+    ../src/core/scanner.hpp \
+    test_scanner.hpp
 
 SOURCES += \
     tests.cpp \
@@ -19,6 +21,8 @@ SOURCES += \
     ../src/core/converter.cpp \
     ../src/core/hostserializer.cpp \
     ../src/core/serializer.cpp \
+    ../src/core/scanner.cpp \
+    test_scanner.cpp
 
 INCLUDEPATH += \
     ../src

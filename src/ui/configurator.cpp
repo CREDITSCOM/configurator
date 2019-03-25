@@ -69,7 +69,7 @@ void cs::Configurator::setupUi()
     updateUi(serializer.readData());
 
     cs::PropertySerializer property(cs::Literals::propertySettingsFileName);
-    property.writePort(ui->executorPortEdit->text().toInt());
+    property.write(uiApiData());
 
     changeSize();
     move(Utils::desktopCenter(this));
@@ -125,16 +125,16 @@ void cs::Configurator::updateUi(const cs::Data& data)
         ui->serverPortEdit->setText(QString::number(data.signalServerPort));
     }
 
-    if (data.apiExecutorPort) {
-        ui->apiExecutorPortEdit->setText(QString::number(data.apiExecutorPort));
+    if (data.api.apiExecutorPort) {
+        ui->apiExecutorPortEdit->setText(QString::number(data.api.apiExecutorPort));
     }
 
-    if (data.executorPort) {
-        ui->executorPortEdit->setText(QString::number(data.executorPort));
+    if (data.api.executorPort) {
+        ui->executorPortEdit->setText(QString::number(data.api.executorPort));
     }
 
-    if (data.apiPort) {
-        ui->apiPortEdit->setText(QString::number(data.apiPort));
+    if (data.api.apiPort) {
+        ui->apiPortEdit->setText(QString::number(data.api.apiPort));
     }
 }
 
@@ -158,15 +158,15 @@ cs::Data cs::Configurator::uiData() const
     }
 
     if (!ui->apiExecutorPortEdit->text().isEmpty()) {
-        data.apiExecutorPort = ui->apiExecutorPortEdit->text().toInt();
+        data.api.apiExecutorPort = ui->apiExecutorPortEdit->text().toInt();
     }
 
     if (!ui->executorPortEdit->text().isEmpty()) {
-        data.executorPort = ui->executorPortEdit->text().toInt();
+        data.api.executorPort = ui->executorPortEdit->text().toInt();
     }
 
     if (!ui->apiPortEdit->text().isEmpty()) {
-        data.apiPort = ui->apiPortEdit->text().toInt();
+        data.api.apiPort = ui->apiPortEdit->text().toInt();
     }
 
     return data;
@@ -198,6 +198,16 @@ cs::Hosts cs::Configurator::uiHosts() const
     }
 
     return hosts;
+}
+
+cs::ApiData cs::Configurator::uiApiData() const
+{
+    ApiData data;
+    data.apiPort = ui->apiPortEdit->text().toInt();
+    data.executorPort = ui->executorPortEdit->text().toInt();
+    data.apiExecutorPort = ui->apiExecutorPortEdit->text().toInt();
+
+    return data;
 }
 
 void cs::Configurator::addHostListEmptyObject()
@@ -286,7 +296,7 @@ void cs::Configurator::onApplyButtonClicked()
     seriazler.writeData(uiData());
 
     cs::PropertySerializer property(cs::Literals::propertySettingsFileName);
-    property.writePort(ui->apiExecutorPortEdit->text().toInt());
+    property.write(uiApiData());
 }
 
 void cs::Configurator::onBoostrapButtonClicked(const QString& text)

@@ -42,6 +42,8 @@ namespace cs
         void updateUi(const Hosts& hosts);
         Hosts uiHosts() const;
 
+        ApiData uiApiData() const;
+
         void addHostListEmptyObject();
         bool validateItemText(QListWidgetItem* item);
         bool isEmptyItemExists();

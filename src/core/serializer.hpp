@@ -6,10 +6,10 @@
 
 #include <core/common.hpp>
 
-class QSettings;
-
 namespace cs
 {
+    class Scanner;
+
     class Serializer : public QObject
     {
         Q_OBJECT
@@ -22,7 +22,7 @@ namespace cs
         void writeData(const Data& data);
 
     private:
-        std::unique_ptr<QSettings> settings;
+        std::unique_ptr<Scanner> settings;
 
         void clear();
         void writeDefaultData();

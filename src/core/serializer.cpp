@@ -3,13 +3,16 @@
 
 #include <QDebug>
 #include <QFile>
-#include <QSettings>
+
+#include <core/scanner.hpp>
+
+using namespace cs;
 
 cs::Serializer::Serializer(const QString& fileName, QObject* parent):
     QObject(parent)
 {
     bool exists = QFile::exists(fileName);
-    settings = std::make_unique<QSettings>(fileName, QSettings::Format::IniFormat);
+    settings = std::make_unique<Scanner>(fileName);
 
     if (!exists) {
         writeDefaultData();
@@ -67,19 +70,19 @@ cs::Data cs::Serializer::readData() const
     settings->beginGroup(cs::Literals::apiKey);
 
     if (settings->contains(cs::Literals::apiExecutorPortParameter)) {
-        data.apiExecutorPort = settings->value(cs::Literals::apiExecutorPortParameter).value<int>();
+        data.api.apiExecutorPort = settings->value(cs::Literals::apiExecutorPortParameter).value<int>();
     }
 
     if (settings->contains(cs::Literals::executorPortParameter)) {
-        data.executorPort = settings->value(cs::Literals::executorPortParameter).value<int>();
+        data.api.executorPort = settings->value(cs::Literals::executorPortParameter).value<int>();
     }
 
     if (settings->contains(cs::Literals::ajaxPortParameter)) {
-        data.ajaxPort = settings->value(cs::Literals::ajaxPortParameter).value<int>();
+        data.api.ajaxPort = settings->value(cs::Literals::ajaxPortParameter).value<int>();
     }
 
     if (settings->contains(cs::Literals::apiPortParameter)) {
-        data.apiPort = settings->value(cs::Literals::apiPortParameter).value<int>();
+        data.api.apiPort = settings->value(cs::Literals::apiPortParameter).value<int>();
     }
 
     settings->endGroup();
@@ -90,8 +93,14 @@ cs::Data cs::Serializer::readData() const
 void cs::Serializer::writeData(const Data& data)
 {
     // TODO: fix when it will be used on ui
-    int ajaxPort = settings->value(cs::Literals::apiKey + QString("/") + cs::Literals::ajaxPortParameter).toInt();
-    ajaxPort = ajaxPort ? ajaxPort : data.ajaxPort;
+    QString apiKeyStr = cs::Literals::apiKey + QString("/") + cs::Literals::ajaxPortParameter;
+    int ajaxPort = 0;
+
+    if (settings->contains(apiKeyStr)) {
+        ajaxPort = settings->value(apiKeyStr).toInt();
+    }
+
+    ajaxPort = ajaxPort ? ajaxPort : data.api.ajaxPort;
     ajaxPort = ajaxPort ? ajaxPort : cs::defaultAjaxPort;
 
     clear();
@@ -141,9 +150,9 @@ void cs::Serializer::writeData(const Data& data)
     // api
     settings->beginGroup(cs::Literals::apiKey);
 
-    settings->setValue(cs::Literals::apiExecutorPortParameter, data.apiExecutorPort);
-    settings->setValue(cs::Literals::executorPortParameter, data.executorPort);
-    settings->setValue(cs::Literals::apiPortParameter, data.apiPort);
+    settings->setValue(cs::Literals::apiExecutorPortParameter, data.api.apiExecutorPort);
+    settings->setValue(cs::Literals::executorPortParameter, data.api.executorPort);
+    settings->setValue(cs::Literals::apiPortParameter, data.api.apiPort);
     settings->setValue(cs::Literals::ajaxPortParameter, ajaxPort);
 
     settings->endGroup();
@@ -168,10 +177,10 @@ void cs::Serializer::writeDefaultData()
     data.signalServerIp = cs::defaultSignalServerIp;
     data.signalServerPort = cs::defaultSignalServerPort;
 
-    data.apiExecutorPort = cs::defaultApiExecutorPort;
-    data.executorPort = cs::defautlExecutorPort;
-    data.apiPort = cs::defaultApiPort;
-    data.ajaxPort = cs::defaultAjaxPort;
+    data.api.apiExecutorPort = cs::defaultApiExecutorPort;
+    data.api.executorPort = cs::defautlExecutorPort;
+    data.api.apiPort = cs::defaultApiPort;
+    data.api.ajaxPort = cs::defaultAjaxPort;
 
     writeData(data);
 
@@ -184,12 +193,10 @@ void cs::Serializer::writeDefaultData()
     settings->beginGroup(cs::Literals::sinksDefaultKey);
 
     settings->setValue("Destination", R"("Console")");
-    settings->setValue("Filter", "%Severity% >= info");
+    settings->setValue("Filter", R"("%Severity% >= info")");
     settings->setValue("Format", R"("[%Severity%] %Message%")");
 
     settings->endGroup();
-
-    convert();
 }
 
 void cs::Serializer::convert()
@@ -207,7 +214,7 @@ void cs::Serializer::convert()
         qDebug() << "Convert error occured";
     }
 
-    settings = std::make_unique<QSettings>(fileName, QSettings::IniFormat);
+    settings = std::make_unique<Scanner>(fileName);
 }
 
 cs::Serializer::~Serializer() = default;
