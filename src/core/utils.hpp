@@ -30,7 +30,8 @@ namespace cs
             return result;
         }
 
-        static QPoint desktopCenter(QWidget* widget) {
+        static QPoint desktopCenter(QWidget* widget)
+        {
             QRect desktopRect = QApplication::desktop()->availableGeometry(widget);
             QPoint center = desktopRect.center();
 
