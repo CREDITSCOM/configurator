@@ -76,7 +76,7 @@ cs::KeyValuePair cs::Tree::split(const QString& str)
     QString key = str.mid(0, index);
     QString value = str.mid(index + 1);
 
-    return std::make_pair(key, value.remove("\r"));
+    return std::make_pair(key.trimmed(), value.remove("\r").trimmed());
 }
 
 std::pair<QString, QString> cs::Tree::separatePrefix(const QString& str)
