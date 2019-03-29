@@ -150,10 +150,21 @@ void cs::Serializer::writeData(const Data& data)
     // api
     settings->beginGroup(cs::Literals::apiKey);
 
-    settings->setValue(cs::Literals::apiExecutorPortParameter, data.api.apiExecutorPort);
-    settings->setValue(cs::Literals::executorPortParameter, data.api.executorPort);
-    settings->setValue(cs::Literals::apiPortParameter, data.api.apiPort);
-    settings->setValue(cs::Literals::ajaxPortParameter, ajaxPort);
+    if (data.api.apiExecutorPort) {
+        settings->setValue(cs::Literals::apiExecutorPortParameter, data.api.apiExecutorPort);
+    }
+
+    if (data.api.executorPort) {
+        settings->setValue(cs::Literals::executorPortParameter, data.api.executorPort);
+    }
+
+    if (data.api.apiPort) {
+        settings->setValue(cs::Literals::apiPortParameter, data.api.apiPort);
+    }
+
+    if (ajaxPort) {
+        settings->setValue(cs::Literals::ajaxPortParameter, ajaxPort);
+    }
 
     settings->endGroup();
 

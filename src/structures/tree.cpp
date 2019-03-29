@@ -4,6 +4,7 @@
 void cs::Tree::clear()
 {
     data.clear();
+    last = QVector<MappedType>::iterator{};
 }
 
 bool cs::Tree::isEmpty() const
@@ -21,7 +22,7 @@ bool cs::Tree::addSection(const QString& section)
             return type.first.toLower() < value.toLower();
         });
 
-        data.insert(iter, MappedType { checked, {} });
+        last = data.insert(iter, MappedType { checked, {} });
         return true;
     }
 
@@ -47,7 +48,7 @@ bool cs::Tree::appendKeyValue(const QString& keyValue)
         return false;
     }
 
-    return addKeyValue(data.back().first, keyValue);
+    return addKeyValue(last->first, keyValue);
 }
 
 bool cs::Tree::isSection(const QString& str)

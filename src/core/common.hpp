@@ -59,7 +59,7 @@ namespace cs
 
     const QString defaultSignalServerIp = "51.38.0.1";
     const int defaultSignalServerPort = 6000;
-    const int defaultHostInputPort = 9000;
+    const int defaultHostInputPort = 6000;
     const int defaultApiExecutorPort = 9070;
     const int defaultApiPort = 9090;
     const int defaultAjaxPort = 8081;

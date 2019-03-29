@@ -53,6 +53,7 @@ namespace cs
 
     private:
         QVector<MappedType> data;
+        QVector<MappedType>::iterator last;
     };
 }
 

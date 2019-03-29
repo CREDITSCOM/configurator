@@ -29,6 +29,8 @@ cs::Ave::Ave(QWidget* parent):
     label->setPixmap(QPixmap::fromImage(QImage(":/resources/credits_bg.jpg")));
 
     move(Utils::desktopCenter(this));
+
+    setWindowIcon(QIcon(":/resources/cs.png"));
 }
 
 void cs::Ave::setNext(QWidget* widget)

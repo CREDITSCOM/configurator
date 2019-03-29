@@ -54,6 +54,8 @@ namespace cs
         QString checkSection(const QString& str) const;
         QString checkKey(const QString& key) const;
 
+        static void process(QStringList& list);
+
         // parse data from string
         bool fromString(const QString& str);
 

@@ -1,8 +1,9 @@
 <RCC>
     <qresource prefix="/">
         <file>resources/credits_bg.jpg</file>
-        <file>resources/cs.ico</file>
         <file>resources/style.css</file>
         <file>resources/host.jpg</file>
+        <file>resources/cs.ico</file>
+        <file>resources/cs.png</file>
     </qresource>
 </RCC>

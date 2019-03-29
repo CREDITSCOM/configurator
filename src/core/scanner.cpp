@@ -153,12 +153,28 @@ QString cs::Scanner::checkKey(const QString& key) const
     return key;
 }
 
+void cs::Scanner::process(QStringList& list)
+{
+    for (auto iterator = list.begin(); iterator != list.end();) {
+        iterator->remove("\r");
+
+        if (iterator->isEmpty()) {
+            iterator = list.erase(iterator);
+        }
+        else {
+            ++iterator;
+        }
+    }
+}
+
 bool cs::Scanner::fromString(const QString& str)
 {
     data.clear();
-    QStringList entity = str.split("\n");
 
-    for (const auto& str : entity) {
+    QStringList entity = str.split("\n");
+    process(entity);
+
+    for (auto& str : entity) {
         if (Tree::isSection(str)) {
             if (!data.addSection(str)) {
                 return failed();

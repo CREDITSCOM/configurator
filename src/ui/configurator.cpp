@@ -57,7 +57,7 @@ void cs::Configurator::setupUi()
     ui->nodeTypeComboBox->addItems(cs::Literals::nodeTypes);
 
     setWindowTitle(cs::Literals::configuratorTitle);
-    setWindowIcon(QIcon(":/resources/cs.ico"));
+    setWindowIcon(QIcon(":/resources/cs.png"));
 
     QFile file(":/resources/style.css");
 
@@ -149,6 +149,8 @@ cs::Data cs::Configurator::uiData() const
     data.nodeOutputPort = ui->outputPortEdit->text().toInt();
     data.nodeInputPort = ui->inputPortEdit->text().toInt();
 
+    data.api.apiExecutorPort  = cs::defaultApiExecutorPort;
+
     if (!ui->serverIpEdit->text().isEmpty()) {
         data.signalServerIp = ui->serverIpEdit->text();
     }
@@ -203,9 +205,21 @@ cs::Hosts cs::Configurator::uiHosts() const
 cs::ApiData cs::Configurator::uiApiData() const
 {
     ApiData data;
-    data.apiPort = ui->apiPortEdit->text().toInt();
-    data.executorPort = ui->executorPortEdit->text().toInt();
-    data.apiExecutorPort = ui->apiExecutorPortEdit->text().toInt();
+    data.apiPort = cs::defaultApiPort;
+    data.executorPort = cs::defautlExecutorPort;
+    data.apiExecutorPort = cs::defaultApiExecutorPort;
+
+    if (!ui->apiPortEdit->text().isEmpty()) {
+        data.apiPort = ui->apiPortEdit->text().toInt();
+    }
+
+    if (!ui->executorPortEdit->text().isEmpty()) {
+        data.executorPort = ui->executorPortEdit->text().toInt();
+    }
+
+    if (!ui->apiExecutorPortEdit->text().isEmpty()) {
+        data.apiExecutorPort = ui->apiExecutorPortEdit->text().toInt();
+    }
 
     return data;
 }
