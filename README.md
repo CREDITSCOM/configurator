@@ -11,8 +11,8 @@ Cross-platform Credits Node config.ini setupper by Ui
 <h3>About</h3>
 Configurator helps easily setup Credits Node config.ini file by using flexible ui.<br/>
 Credits Node parameters short infomation:<br/>
-
-Boostrap - startup node type, possible signal_server or list types<br/>
+<br/>
+Boostrap - node startup type, possible signal_server or list types<br/>
 Node type - client or router<br/>
 Server ip/port - ip/port to signal_server<br/>
 Input port - node socket port to receive messages<br/>
