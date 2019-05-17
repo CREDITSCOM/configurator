@@ -6,10 +6,23 @@
 
 # Credits Node Configurator
 
-Credits Node config.ini setupper by Ui
+Cross-platform Credits Node config.ini setupper by Ui
+
+<h3>About</h3>
+Configurator helps easily setup Credits Node config.ini file by using flexible ui.<br/>
+Credits Node parameters short infomation:<br/>
+
+Boostrap - startup node type, possible signal_server or list types<br/>
+Node type - client or router<br/>
+Server ip/port - ip/port to signal_server<br/>
+Input port - node socket port to receive messages<br/>
+Public ip/port - node ip/port (endpoint) to send messages from this socket<br/>
+Api executor port - internal node port for executor<br/>
+Executor port - public and internal executor port for node or clients<br/>
+Api port - main public api port<br/>
 
 <h2>How to Build</h2>
-Use QtCreator with Qt 5.13 or later with C++17 compiler support
+Use QtCreator with Qt 5.12 or later with C++17 compiler support
 
 <h3>Resources</h3>
 
