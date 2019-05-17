@@ -1,3 +1,9 @@
+<img src="https://raw.githubusercontent.com/CREDITSCOM/Documentation/master/Src/Logo_Credits_horizontal_black.png" align="center">
+
+[![Twitter](https://img.shields.io/twitter/follow/creditscom.svg?label=Follow&style=social)](https://twitter.com/intent/follow?screen_name=creditscom)
+[![AGPL License](https://img.shields.io/github/license/CREDITSCOM/configurator.svg?color=green&label=License&style=plastic)](LICENSE)
+![Version](https://img.shields.io/github/tag/CREDITSCOM/configurator.svg?label=Version&style=plastic)
+
 # Credits Node Configurator
 
 Credits Node config.ini setupper by Ui
