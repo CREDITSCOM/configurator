@@ -10,16 +10,31 @@ Cross-platform Credits Node config.ini setupper by Ui
 
 <h3>About</h3>
 Configurator helps easily setup Credits Node config.ini file by using flexible ui.<br/>
-Credits Node parameters short infomation:<br/>
+Credits Node parameters short infomation, possible values exists at square brackets:<br/>
 <br/>
-Boostrap - node startup type, possible signal_server or list types<br/>
-Node type - client or router<br/>
-Server ip/port - ip/port to signal_server<br/>
-Input port - node socket port to receive messages<br/>
-Public ip/port - node ip/port (endpoint) to send messages from this socket<br/>
-Api executor port - internal node port for executor<br/>
-Executor port - public and internal executor port for node or clients<br/>
-Api port - main public api port<br/>
+<strong><em>Boostrap</em></strong> [list, signal_server] - node startup type,<br/>
+ - list used to connect network by user-defined node endpoint list<br/>
+ - signal_server used to connect network by existing signal node<br/>
+<strong><em>Node type</em></strong> [client, router] - transport node behaviour,<br/>
+ - client used to normal node behaviour, also knows as "grey" network node<br/>
+ - rounter used as "white" network node to transfer additional data to "grey" nodes<br/>
+<strong><em>Server ip/port</em></strong> - ip/port to signal_server<br/>
+<strong><em>Input port</em></strong> - node socket port to receive messages<br/>
+<strong><em>Public ip/port</em></strong> - node ip/port (endpoint) to send messages from this socket<br/>
+<strong><em>Api executor port</em></strong> - internal node port for executor<br/>
+<strong><em>Executor port</em></strong> - public and internal executor port for node or clients<br/>
+<strong><em>Api port</em></strong> - main public api port<br/>
+<br/>
+Possible ip format at "ip" edits:<br/>
+- ipv4: 123.45.6.78<br/>
+- ipv6: 2001:db8:85a3:8d3:1319:8a2e:370:7348<br/>
+<br/>
+Possible port format at "port" edits:<br/>
+- 9000<br/>
+<br/>
+Possible format at [list] elements:<br/>
+- ipv4: 123.45.6.78:9010<br/>
+- ipv6: [2001:db8:85a3:8d3:1319:8a2e:370:7348]:9010<br/>
 
 <h2>How to Build</h2>
 Use QtCreator with Qt 5.12 or later with C++17 compiler support
