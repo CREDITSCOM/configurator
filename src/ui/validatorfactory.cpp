@@ -1,28 +1,24 @@
 #include "validatorfactory.hpp"
 
 #include <QValidator>
-#include <QIntValidator>
-#include <QRegularExpression>
-#include <QRegularExpressionValidator>
+
+#include <ui/validators/portvalidator.hpp>
+#include <ui/validators/ipv4validator.hpp>
+#include <ui/validators/ipv6validator.hpp>
 
 QValidator* cs::ValidatorFactory::create(cs::ValidatorFactory::Type type, QObject* parent) noexcept
 {
-    constexpr static int minPort = 1024;
-    constexpr static int maxPort = 65535;
-
     switch (type) {
         case Type::Port: {
-            return new QIntValidator(minPort, maxPort, parent);
+            return new PortValidator(parent);
         }
 
         case Type::Ipv4: {
-            QRegularExpression ipv4Regexpr("[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}");
-            return new QRegularExpressionValidator(ipv4Regexpr, parent);
+            return new Ipv4Validator(parent);
         }
 
         case Type::Ipv6: {
-            QRegularExpression ipv6Regexpr("");
-            return new QRegularExpressionValidator(ipv6Regexpr, parent);
+            return new Ipv6Validator(parent);
         }
     }
 

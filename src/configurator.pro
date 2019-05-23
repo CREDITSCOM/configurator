@@ -21,7 +21,10 @@ HEADERS += \
     ui/validatorfactory.hpp \
     core/propertyserializer.hpp \
     core/scanner.hpp \
-    structures/tree.hpp
+    structures/tree.hpp \
+    ui/validators/ipv4validator.hpp \
+    ui/validators/ipv6validator.hpp \
+    ui/validators/portvalidator.hpp
 
 SOURCES += \
     main.cpp \
@@ -34,7 +37,10 @@ SOURCES += \
     ui/validatorfactory.cpp \
     core/propertyserializer.cpp \
     core/scanner.cpp \
-    structures/tree.cpp
+    structures/tree.cpp \
+    ui/validators/ipv4validator.cpp \
+    ui/validators/ipv6validator.cpp \
+    ui/validators/portvalidator.cpp
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
