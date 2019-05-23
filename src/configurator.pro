@@ -17,6 +17,7 @@ HEADERS += \
     core/hostserializer.hpp \
     core/utils.hpp \
     ui/ave.h \
+    ui/multiplevalidatoredit.hpp \
     ui/validatorfactory.hpp \
     core/propertyserializer.hpp \
     core/scanner.hpp \
@@ -29,6 +30,7 @@ SOURCES += \
     core/converter.cpp \
     core/hostserializer.cpp \
     ui/ave.cpp \
+    ui/multiplevalidatoredit.cpp \
     ui/validatorfactory.cpp \
     core/propertyserializer.cpp \
     core/scanner.cpp \
