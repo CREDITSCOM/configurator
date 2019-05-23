@@ -15,9 +15,14 @@ QValidator* cs::ValidatorFactory::create(cs::ValidatorFactory::Type type, QObjec
             return new QIntValidator(minPort, maxPort, parent);
         }
 
-        case Type::Ip: {
-            QRegularExpression regexpr("[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}");
-            return new QRegularExpressionValidator(regexpr, parent);
+        case Type::Ipv4: {
+            QRegularExpression ipv4Regexpr("[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}");
+            return new QRegularExpressionValidator(ipv4Regexpr, parent);
+        }
+
+        case Type::Ipv6: {
+            QRegularExpression ipv6Regexpr("");
+            return new QRegularExpressionValidator(ipv6Regexpr, parent);
         }
     }
 

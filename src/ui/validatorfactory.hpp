@@ -15,7 +15,8 @@ namespace cs
     public:
         enum class Type
         {
-            Ip,
+            Ipv4,
+            Ipv6,
             Port
         };
 
