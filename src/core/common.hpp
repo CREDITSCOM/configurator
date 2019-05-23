@@ -67,7 +67,7 @@ namespace cs
 
     struct Cmds
     {
-        constexpr inline static auto cmds = {
+        inline static auto cmds = {
             "start java -jar contract-executor/target/contract-executor.jar",
             "start java -jar wallet-desktop/target/wallet-desktop.jar",
             "client",

@@ -67,17 +67,21 @@ std::optional<cs::Host> cs::HostSerializer::split(const QString& str)
         return std::nullopt;
     }
 
-    QRegularExpression ipRegExpr("[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}");
+    QRegularExpression ipv4RegExpr("[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}");
     QRegularExpression portRegExpr(":[0-9]{2,5}");
 
-    QRegularExpressionMatch ipMatch = ipRegExpr.match(str);
+    QRegularExpressionMatch ipMatch = ipv4RegExpr.match(str);
     QRegularExpressionMatch portMatch = portRegExpr.match(str);
 
     if (!ipMatch.hasMatch() || !portMatch.hasMatch()) {
         return std::nullopt;
     }
 
-    cs::Host host { ipMatch.captured(), portMatch.captured().remove(":").toInt() };
+    cs::Host host {
+        ipMatch.captured(),
+        portMatch.captured().remove(":").toInt()
+    };
+
     return std::make_optional(std::move(host));
 }
 
