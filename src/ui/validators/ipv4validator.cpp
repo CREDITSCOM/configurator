@@ -5,6 +5,6 @@
 cs::Ipv4Validator::Ipv4Validator(QObject* parent):
     QRegularExpressionValidator(parent)
 {
-    QRegularExpression ipv4Regexpr("[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}");
+    QRegularExpression ipv4Regexpr(R"RX(\b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\b)RX");
     setRegularExpression(ipv4Regexpr);
 }

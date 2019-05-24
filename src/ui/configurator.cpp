@@ -83,10 +83,13 @@ void cs::Configurator::setupValidators()
     ui->outputPortEdit->setValidator(ValidatorFactory::create(ValidatorFactory::Type::Port, this));
     ui->inputPortEdit->setValidator(ValidatorFactory::create(ValidatorFactory::Type::Port, this));
 
-    ui->serverIpEdit->setValidator(ValidatorFactory::create(ValidatorFactory::Type::Ipv4, this));
+    ui->serverIpEdit->addValidator(ValidatorFactory::create(ValidatorFactory::Type::Ipv4, this));
+    ui->serverIpEdit->addValidator(ValidatorFactory::create(ValidatorFactory::Type::Ipv6, this));
+
     ui->serverPortEdit->setValidator(ValidatorFactory::create(ValidatorFactory::Type::Port, this));
 
-    ui->outputIpEdit->setValidator(ValidatorFactory::create(ValidatorFactory::Type::Ipv4, this));
+    ui->outputIpEdit->addValidator(ValidatorFactory::create(ValidatorFactory::Type::Ipv4, this));
+    ui->outputIpEdit->addValidator(ValidatorFactory::create(ValidatorFactory::Type::Ipv6, this));
 }
 
 void cs::Configurator::setupHostList()

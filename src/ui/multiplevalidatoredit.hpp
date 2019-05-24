@@ -17,7 +17,7 @@ namespace cs
         void addValidator(QValidator* validator);
 
     protected:
-        void onTextChanged();
+        void onTextChanged(const QString& text);
 
     private:
         void initialization();
