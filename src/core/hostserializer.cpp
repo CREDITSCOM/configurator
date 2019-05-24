@@ -61,13 +61,9 @@ void cs::HostSerializer::serialize(const cs::Hosts& hosts)
     file.close();
 }
 
-std::optional<cs::Host> cs::HostSerializer::split(const QString& str)
+static std::optional<cs::Host> splitAsIpv4(const QString& str)
 {
-    if (!str.contains(":")) {
-        return std::nullopt;
-    }
-
-    QRegularExpression ipv4RegExpr("[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}");
+    QRegularExpression ipv4RegExpr(R"RX(\b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\b)RX");
     QRegularExpression portRegExpr(":[0-9]{2,5}");
 
     QRegularExpressionMatch ipMatch = ipv4RegExpr.match(str);
@@ -83,6 +79,44 @@ std::optional<cs::Host> cs::HostSerializer::split(const QString& str)
     };
 
     return std::make_optional(std::move(host));
+}
+
+static std::optional<cs::Host> splitAsIpv6(const QString& str)
+{
+    QString spliited = str;
+
+    QRegularExpression ipv6RegExpr(
+       R"RX(\b[0-9a-fA-f]{1,4}:[0-9a-fA-f]{1,4}:[0-9a-fA-f]{1,4}:[0-9a-fA-f]{1,4}:[0-9a-fA-f]{1,4}:[0-9a-fA-f]{1,4}:[0-9a-fA-f]{1,4}:[0-9a-fA-f]{1,4}\b)RX"
+    );
+
+    QRegularExpression portRegExpr(R"(\]:[0-9]{2,5})");
+
+    QRegularExpressionMatch ipMatch = ipv6RegExpr.match(spliited.remove("[").remove("]"));
+    QRegularExpressionMatch portMatch = portRegExpr.match(str);
+
+    if (!ipMatch.hasMatch() || !portMatch.hasMatch()) {
+        return std::nullopt;
+    }
+
+    cs::Host host {
+        ipMatch.captured(),
+        portMatch.captured().remove("]:").toInt()
+    };
+
+    return std::make_optional(std::move(host));
+}
+
+std::optional<cs::Host> cs::HostSerializer::split(const QString& str)
+{
+    if (str.contains("[") && str.contains("]")) {
+        return splitAsIpv6(str);
+    }
+
+    if (str.contains(":")) {
+        return splitAsIpv4(str);
+    }
+
+    return std::nullopt;
 }
 
 QString cs::HostSerializer::combine(const cs::Host& host)
