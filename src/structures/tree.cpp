@@ -92,6 +92,11 @@ std::pair<QString, QString> cs::Tree::separatePrefix(const QString& str)
     return std::make_pair(QString(), QString());
 }
 
+QString cs::Tree::combine(const QString& section, const QString& key)
+{
+    return section + QString("/") + key;
+}
+
 bool cs::Tree::containsSection(const QString& section) const
 {
     auto iter = std::find_if(data.begin(), data.end(), [&](const cs::MappedType& e) {

@@ -173,9 +173,16 @@ void cs::Serializer::writeData(const Data& data)
 
 void cs::Serializer::clear()
 {
-    settings->remove(cs::Literals::signalServerKey);
-    settings->remove(cs::Literals::apiKey);
-    settings->remove(cs::Literals::hostOutputKey);
+    settings->remove(cs::Tree::combine(cs::Literals::signalServerKey, cs::Literals::ipParameter));
+    settings->remove(cs::Tree::combine(cs::Literals::signalServerKey, cs::Literals::portParameter));
+
+    settings->remove(cs::Tree::combine(cs::Literals::apiKey, cs::Literals::apiPortParameter));
+    settings->remove(cs::Tree::combine(cs::Literals::apiKey, cs::Literals::ajaxPortParameter));
+    settings->remove(cs::Tree::combine(cs::Literals::apiKey, cs::Literals::executorPortParameter));
+    settings->remove(cs::Tree::combine(cs::Literals::apiKey, cs::Literals::apiExecutorPortParameter));
+
+    settings->remove(cs::Tree::combine(cs::Literals::hostOutputKey, cs::Literals::ipParameter));
+    settings->remove(cs::Tree::combine(cs::Literals::hostOutputKey, cs::Literals::portParameter));
 }
 
 void cs::Serializer::writeDefaultData()

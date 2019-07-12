@@ -32,6 +32,7 @@ namespace cs
         static bool isEmpty(const QString& str);
         static KeyValuePair split(const QString& str);
         static std::pair<QString, QString> separatePrefix(const QString& str);
+        static QString combine(const QString& section, const QString& key);
 
         bool containsSection(const QString& section) const;
         bool containsKey(const QString& section, const QString& key) const;
