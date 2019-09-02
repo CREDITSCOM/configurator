@@ -45,6 +45,14 @@ namespace cs
         inline static auto ipParameter = "ip";
         inline static auto portParameter = "port";
 
+        // settings.properties
+        inline static auto apiNodeHost = "node.api.host";
+        inline static auto apiNodePort = "node.api.port";
+        inline static auto apiExecutorPort = "contract.executor.port";
+        inline static auto apiExecutorNodePort = "contract.executor.node.api.port";
+        inline static auto apiExecutorNodeHost = "contract.executor.node.api.host";
+        inline static auto apiExecutorReadTimeout = "contract.executor.read.client.timeout";
+
         // ui lists
         inline const static QStringList boostrapTypes = {
             signalServerType,
@@ -57,6 +65,7 @@ namespace cs
         };
     };
 
+    const QString defaultLocalHostIp = "127.0.0.1";
     const QString defaultSignalServerIp = "51.38.0.1";
     const int defaultSignalServerPort = 6000;
     const int defaultHostInputPort = 6000;

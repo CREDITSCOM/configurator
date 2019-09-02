@@ -2,7 +2,11 @@
 #define PROPERTYSERIALIZER_HPP
 
 #include <QObject>
+
 #include <core/common.hpp>
+#include <core/scanner.hpp>
+
+#include <memory>
 
 namespace cs
 {
@@ -12,12 +16,16 @@ namespace cs
 
     public:
         explicit PropertySerializer(const QString& fileName, QObject* parent = nullptr);
+        ~PropertySerializer();
 
-        int readPort() const;
+        ApiData read() const;
         void write(const ApiData& data);
 
     private:
-        QString name;
+        std::unique_ptr<Scanner> settings;
+
+        void writeDefaultData();
+        void clear();
     };
 }
 

@@ -69,6 +69,7 @@ void cs::Configurator::setupUi()
     updateUi(serializer.readData());
 
     cs::PropertySerializer property(cs::Literals::propertySettingsFileName);
+    property.read();
     property.write(uiApiData());
 
     changeSize();

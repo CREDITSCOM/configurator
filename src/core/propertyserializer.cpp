@@ -1,54 +1,86 @@
 #include "propertyserializer.hpp"
 
 #include <QFile>
-#include <QTextStream>
-
-static const char* defaultText = "node.api.host=127.0.0.1\n"
-                                 "node.api.port=%1\n"
-                                 "contract.executor.port=%2\n"
-                                 "contract.executor.node.api.port=%3";
 
 cs::PropertySerializer::PropertySerializer(const QString& fileName, QObject* parent):
-    QObject(parent),
-    name(fileName)
+    QObject(parent)
 {
+    bool exists = QFile::exists(fileName);
+    settings = std::make_unique<Scanner>(fileName);
+
+    if (!exists) {
+        writeDefaultData();
+    }
 }
 
-int cs::PropertySerializer::readPort() const
+cs::ApiData cs::PropertySerializer::read() const
 {
-    QFile file(name);
-    int port = 0;
+    ApiData data;
 
-    if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {
-        QByteArray data = file.readAll();
-        QString str = data;
+    settings->beginGroup(cs::Literals::apiKey);
 
-        int start = str.lastIndexOf("=") + 1;
-        int length = str.length() - start;
-
-        port = str.mid(start, length).toInt();
-
-        file.close();
+    if (settings->contains(cs::Literals::apiNodePort)) {
+        data.apiPort = settings->value(cs::Literals::apiNodePort).value<int>();
     }
 
-    return port;
+    if (settings->contains(cs::Literals::apiExecutorPort)) {
+        data.executorPort = settings->value(cs::Literals::apiExecutorPort).value<int>();
+    }
+
+    if (settings->contains(cs::Literals::apiExecutorNodePort)) {
+        data.executorPort = settings->value(cs::Literals::apiExecutorNodePort).value<int>();
+    }
+
+    settings->endGroup();
+
+    return data;
 }
 
 void cs::PropertySerializer::write(const cs::ApiData& data)
 {
-    if (QFile::exists(name)) {
-        QFile::remove(name);
+    clear();
+
+    settings->beginGroup(cs::Literals::apiKey);
+
+    if (data.apiPort != 0) {
+        settings->setValue(cs::Literals::apiNodePort, data.apiPort);
     }
 
-    QFile file(name);
-
-    if (!file.open(QIODevice::WriteOnly | QIODevice::Text)) {
-        return;
+    if (data.executorPort != 0) {
+        settings->setValue(cs::Literals::apiExecutorPort, data.executorPort);
     }
 
-    QTextStream stream(&file);
-    QString str(defaultText);
-    stream << str.arg(data.apiPort).arg(data.executorPort).arg(data.apiExecutorPort);
+    if (data.apiExecutorPort != 0) {
+        settings->setValue(cs::Literals::apiExecutorNodePort, data.apiExecutorPort);
+    }
 
-    file.close();
+    settings->endGroup();
 }
+
+void cs::PropertySerializer::writeDefaultData()
+{
+    ApiData data;
+    data.apiExecutorPort = cs::defaultApiExecutorPort;
+    data.executorPort = cs::defautlExecutorPort;
+    data.apiPort = cs::defaultApiPort;
+    data.ajaxPort = cs::defaultAjaxPort;
+
+    write(data);
+
+    settings->beginGroup(cs::Literals::apiKey);
+
+    settings->setValue(cs::Literals::apiNodeHost, cs::defaultLocalHostIp);
+    settings->setValue(cs::Literals::apiExecutorNodeHost, cs::defaultLocalHostIp);
+    settings->setValue(cs::Literals::apiExecutorReadTimeout, 0);
+
+    settings->endGroup();
+}
+
+void cs::PropertySerializer::clear()
+{
+    settings->remove(cs::Tree::combine(cs::Literals::apiKey, cs::Literals::apiNodePort));
+    settings->remove(cs::Tree::combine(cs::Literals::apiKey, cs::Literals::apiExecutorPort));
+    settings->remove(cs::Tree::combine(cs::Literals::apiKey, cs::Literals::apiExecutorNodePort));
+}
+
+cs::PropertySerializer::~PropertySerializer() = default;
