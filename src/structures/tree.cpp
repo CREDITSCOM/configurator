@@ -35,7 +35,12 @@ bool cs::Tree::addKeyValue(const QString& section, const QString& keyValue)
     KeyValuePair pair = split(keyValue);
 
     if (!containsKey(section, keyValue)) {
-        vector.push_back(pair);
+
+        auto iter = std::lower_bound(vector.begin(), vector.end(), pair, [=] (const KeyValuePair& p, const KeyValuePair& value) {
+            return (p.first.length() < value.first.length()) && !value.first.contains('#');
+        });
+
+        vector.insert(iter, pair);
         return true;
     }
 
