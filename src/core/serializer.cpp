@@ -215,6 +215,11 @@ void cs::Serializer::writeDefaultData()
     settings->setValue("Format", R"("[%Severity%] %Message%")");
 
     settings->endGroup();
+
+    // api default
+    settings->beginGroup(cs::Literals::apiKey);
+    settings->setValue(cs::Literals::executorCommand, cs::defaultExecutorCommand);
+    settings->endGroup();
 }
 
 void cs::Serializer::convert()

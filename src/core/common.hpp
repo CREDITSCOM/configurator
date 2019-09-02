@@ -41,6 +41,7 @@ namespace cs
         inline static auto executorPortParameter = "executor_port";
         inline static auto apiPortParameter = "port";
         inline static auto ajaxPortParameter = "ajax_port";
+        inline static auto executorCommand = "executor_command";
 
         inline static auto ipParameter = "ip";
         inline static auto portParameter = "port";
@@ -65,8 +66,11 @@ namespace cs
         };
     };
 
+    // defaults
     const QString defaultLocalHostIp = "127.0.0.1";
     const QString defaultSignalServerIp = "51.38.0.1";
+    const QString defaultExecutorCommand = "java -Xmx768m -XX:MaxMetaspaceSize=256m -XX:+HeapDumpOnOutOfMemoryError -jar contract-executor.jar";
+
     const int defaultSignalServerPort = 6000;
     const int defaultHostInputPort = 6000;
     const int defaultApiExecutorPort = 9070;
