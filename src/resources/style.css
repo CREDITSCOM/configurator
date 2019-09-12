@@ -1,5 +1,5 @@
 QWidget#configurator {
-    background: qlineargradient(x1:0, y1:0, x2:1, y2:0, stop:0 #00374E, stop: 0.2 #255 stop:0.5 #7B94A9, stop:0.8 #255 stop:1 #00374E);
+    background: qlineargradient(x1:0, y1:0, x2:1, y2:0, stop:0 #000000, stop: 0.2 #535353 stop:0.5 #000000, stop:0.8 #535353 stop:1 #000000);
     border: 2px solid white;
     border-radius: 20px;
 }
