@@ -56,6 +56,7 @@ void cstests::Test_Scanner::clean()
 {
     if (QFile::exists(cs::Literals::configFileName)) {
         QFile::remove(cs::Literals::configFileName);
+
         qDebug() << cs::Literals::configFileName << " cleaned";
     }
 }
@@ -79,19 +80,38 @@ void cstests::Test_Scanner::write()
 
     QCOMPARE(status1, cs::Scanner::Status::NoError);
 
-    scanner1.sync();
-
     cs::Scanner scanner2(cs::Literals::configFileName);
     cs::Scanner::Status status2 = scanner2.status();
 
     QCOMPARE(status2, cs::Scanner::Status::NoError);
 
     QString str1 = scanner1.toString();
-    QString st2 = scanner2.toString();
+    QString str2 = scanner2.toString();
+
+    QCOMPARE(str1, str2);
+
+    scanner1.sync();
+
+    QString readedStr1;
+    QString readedStr2;
+
+    {
+        QFile file(cs::Literals::configFileName);
+        file.open(QIODevice::ReadOnly | QIODevice::Text);
+
+        readedStr1 = file.readAll();
+    }
 
     scanner2.sync();
 
-    QCOMPARE(str1, st2);
+    {
+        QFile file(cs::Literals::configFileName);
+        file.open(QIODevice::ReadOnly | QIODevice::Text);
+
+        readedStr2 = file.readAll();
+    }
+
+    QCOMPARE(readedStr1, readedStr2);
 }
 
 void cstests::Test_Scanner::cleanupTestCase()
