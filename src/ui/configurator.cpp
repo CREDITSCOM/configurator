@@ -2,6 +2,7 @@
 #include "ui_configurator.h"
 
 #include <ui/validatorfactory.hpp>
+
 #include <core/serializer.hpp>
 #include <core/propertyserializer.hpp>
 #include <core/utils.hpp>
@@ -12,6 +13,7 @@
 #include <QDebug>
 #include <QFile>
 #include <QFileDialog>
+#include <QPaintEvent>
 #include <QMessageBox>
 #include <QIntValidator>
 #include <QRegularExpression>
@@ -53,6 +55,8 @@ void cs::Configurator::setupUi()
     ui->runButton->setVisible(false);
 #endif
 
+    ui->mainLayout->addStretch(1);
+
     ui->boostrapTypeBox->addItems(cs::Literals::boostrapTypes);
     ui->nodeTypeComboBox->addItems(cs::Literals::nodeTypes);
 
@@ -72,7 +76,6 @@ void cs::Configurator::setupUi()
     property.read();
     property.write(uiApiData());
 
-    changeSize();
     move(Utils::desktopCenter(this));
 
     onBoostrapButtonClicked(ui->boostrapTypeBox->currentText());
@@ -267,35 +270,6 @@ bool cs::Configurator::isEmptyItemExists()
     return false;
 }
 
-void cs::Configurator::changeSize(QSize size)
-{
-    setFixedSize(size);
-    resize(size);
-}
-
-void cs::Configurator::changeSize(int w, int h)
-{
-    changeSize(QSize(w, h));
-}
-
-void cs::Configurator::changeSize()
-{
-    const static int delta = 40;
-
-    if (ui->listBox->isVisible() && ui->extendingCheckBox->isChecked()) {
-        changeSize(fixedWidth, fixedMaxHeight);
-    }
-    else if (ui->listBox->isVisible() && !ui->extendingCheckBox->isChecked()) {
-        changeSize(fixedWidth, fixedMaxHeight - delta);
-    }
-    else if (!ui->listBox->isVisible() && ui->extendingCheckBox->isChecked()){
-        changeSize(fixedWidth, fixedMinHeight);
-    }
-    else {
-        changeSize(fixedWidth, fixedMinHeight - delta);
-    }
-}
-
 void cs::Configurator::onApplyButtonClicked()
 {
     if (!ui->outputIpEdit->text().isEmpty()) {
@@ -325,8 +299,6 @@ void cs::Configurator::onBoostrapButtonClicked(const QString& text)
     else {
         ui->listBox->setVisible(true);
     }
-
-    changeSize();
 }
 
 void cs::Configurator::onSaveButtonClicked()
@@ -437,6 +409,4 @@ void cs::Configurator::onExtendSettings(bool state)
 
     ui->apiPortEdit->setVisible(state);
     ui->apiPortLabel->setVisible(state);
-
-    changeSize();
 }

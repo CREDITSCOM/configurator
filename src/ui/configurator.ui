@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>565</height>
+    <width>430</width>
+    <height>576</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -22,16 +22,19 @@
     <height>0</height>
    </size>
   </property>
-  <property name="maximumSize">
-   <size>
-    <width>400</width>
-    <height>565</height>
-   </size>
-  </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout_5">
+  <property name="layoutDirection">
+   <enum>Qt::LeftToRight</enum>
+  </property>
+  <property name="autoFillBackground">
+   <bool>false</bool>
+  </property>
+  <layout class="QVBoxLayout" name="mainLayout">
+   <property name="sizeConstraint">
+    <enum>QLayout::SetFixedSize</enum>
+   </property>
    <item>
     <widget class="QGroupBox" name="boostrapBox">
      <property name="sizePolicy">
@@ -50,6 +53,9 @@
       <string>Boostrap</string>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout" stretch="0">
+      <property name="sizeConstraint">
+       <enum>QLayout::SetDefaultConstraint</enum>
+      </property>
       <item>
        <layout class="QHBoxLayout" name="boostrapHLayout">
         <item>
@@ -131,6 +137,9 @@
       <string>Node</string>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_4">
+      <property name="sizeConstraint">
+       <enum>QLayout::SetDefaultConstraint</enum>
+      </property>
       <item>
        <layout class="QHBoxLayout" name="nodeTypeHLayout" stretch="0,0,0">
         <item>
@@ -189,6 +198,9 @@
       <string>Settings</string>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_2">
+      <property name="sizeConstraint">
+       <enum>QLayout::SetDefaultConstraint</enum>
+      </property>
       <item>
        <layout class="QGridLayout" name="settingsGridLayout">
         <item row="0" column="0">
@@ -376,21 +388,11 @@
       <string>Server list</string>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_3">
+      <property name="sizeConstraint">
+       <enum>QLayout::SetDefaultConstraint</enum>
+      </property>
       <item>
        <layout class="QGridLayout" name="serverListGridLayout">
-        <item row="0" column="1">
-         <widget class="QPushButton" name="saveListButton">
-          <property name="minimumSize">
-           <size>
-            <width>80</width>
-            <height>21</height>
-           </size>
-          </property>
-          <property name="text">
-           <string>Save</string>
-          </property>
-         </widget>
-        </item>
         <item row="0" column="2">
          <widget class="QLineEdit" name="listEdit">
           <property name="readOnly">
@@ -421,23 +423,23 @@
           </property>
          </widget>
         </item>
+        <item row="0" column="1">
+         <widget class="QPushButton" name="saveListButton">
+          <property name="minimumSize">
+           <size>
+            <width>80</width>
+            <height>21</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>Save</string>
+          </property>
+         </widget>
+        </item>
        </layout>
       </item>
      </layout>
     </widget>
-   </item>
-   <item>
-    <spacer name="verticalSpacer">
-     <property name="orientation">
-      <enum>Qt::Vertical</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>387</width>
-       <height>13</height>
-      </size>
-     </property>
-    </spacer>
    </item>
   </layout>
  </widget>
